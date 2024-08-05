@@ -1,20 +1,18 @@
 package com.example.ExpenseTracker.Model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
-
-public record User(
-
+public record Budget(
         @Id
         Long id,
         @NotBlank
-        String username,
+        User user,
         @NotBlank
-        String password,
+        Catergory catergory,
         @NotBlank
-        String email
+        Double amount
+
+
 ) {
 }
