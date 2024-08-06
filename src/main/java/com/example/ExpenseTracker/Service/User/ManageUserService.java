@@ -42,7 +42,7 @@ public class ManageUserService implements Save<User> , FindBy<User>, Update<User
             user.setEmail(entity.getEmail());
             user.setPassword(entity.getPassword());
             user.setUsername(entity.getUsername());
-            userRepository.save(entity);
+            userRepository.save(user);
 
         } else{
 
