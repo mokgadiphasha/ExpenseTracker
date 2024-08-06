@@ -9,7 +9,7 @@ public record Budget(
         @NotBlank
         User user,
         @NotBlank
-        Catergory catergory,
+        Category category,
         @NotBlank
         Double amount
 

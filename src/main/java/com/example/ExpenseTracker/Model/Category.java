@@ -1,11 +1,13 @@
 package com.example.ExpenseTracker.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(value = "Category")
 public class Category {
-    private String name;
+    @Id
     private Long id;
+    private String name;
 
     public Category(String name) {
         this.name = name;
