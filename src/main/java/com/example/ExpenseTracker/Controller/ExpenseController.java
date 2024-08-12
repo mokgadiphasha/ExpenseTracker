@@ -1,5 +1,6 @@
 package com.example.ExpenseTracker.Controller;
 
+import com.example.ExpenseTracker.Model.Category;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Service.Expense.ManageExpenseService;
@@ -36,6 +37,14 @@ public class ExpenseController {
     public void UpdateUser(@PathVariable Long id, @RequestBody Expense expense){
         manageExpenseService.updateEntity(id,expense);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        manageExpenseService.delete(id);
+    }
+
+    @GetMapping("{category}")
+    public void getUserByCategory(@PathVariable Category category){}
 
 
 }

@@ -1,17 +1,17 @@
 package com.example.ExpenseTracker.Service.Expense;
 
+import com.example.ExpenseTracker.Model.Category;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
-import com.example.ExpenseTracker.Service.FindBy;
-import com.example.ExpenseTracker.Service.Save;
-import com.example.ExpenseTracker.Service.Update;
+import com.example.ExpenseTracker.Service.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ManageExpenseService implements Save<Expense>, Update<Expense>, FindBy<Expense> {
+public class ManageExpenseService implements Save<Expense>, Update<Expense>, FindBy<Expense> , Delete, FindByFilter<Category> {
     private final ExpenseRepository expenseRepository;
 
     public ManageExpenseService(ExpenseRepository expenseRepository) {
@@ -26,11 +26,13 @@ public class ManageExpenseService implements Save<Expense>, Update<Expense>, Fin
         return expense.orElse(null);
     }
 
+
     @Override
     public void save(Expense entity) {
         expenseRepository.save(entity);
 
     }
+
 
     @Override
     public void updateEntity(Long id, Expense entity) {
@@ -45,6 +47,19 @@ public class ManageExpenseService implements Save<Expense>, Update<Expense>, Fin
         } else{
 
         }
+
+    }
+
+
+    @Override
+    public void delete(Long id) {
+        expenseRepository.deleteById(id);
+    }
+
+
+    @Override
+    public List<Category> findByFilter(Category filter) {
+        return null;
 
     }
 }
