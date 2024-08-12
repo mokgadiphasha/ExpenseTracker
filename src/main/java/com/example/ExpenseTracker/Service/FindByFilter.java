@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface FindByFilter <T>{
 
-     List<T> findByFilter(T filter);
+     List<T> findByFilter(Long id);
 }

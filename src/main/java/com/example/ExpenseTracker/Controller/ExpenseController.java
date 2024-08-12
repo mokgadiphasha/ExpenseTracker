@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {
@@ -32,19 +34,24 @@ public class ExpenseController {
         return manageExpenseService.findEntityById(id);
     }
 
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void UpdateUser(@PathVariable Long id, @RequestBody Expense expense){
         manageExpenseService.updateEntity(id,expense);
     }
 
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
         manageExpenseService.delete(id);
     }
 
-    @GetMapping("{category}")
-    public void getUserByCategory(@PathVariable Category category){}
+
+    @GetMapping("/filter/{id}")
+    public List<Expense> getUserByCategory(@PathVariable Long id){
+        return manageExpenseService.findByFilter(id);
+    }
 
 
 }

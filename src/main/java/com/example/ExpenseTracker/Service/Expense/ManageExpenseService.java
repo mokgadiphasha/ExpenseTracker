@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
-public class ManageExpenseService implements Save<Expense>, Update<Expense>, FindBy<Expense> , Delete, FindByFilter<Category> {
+public class ManageExpenseService implements Save<Expense>, Update<Expense>, FindBy<Expense> , Delete, FindByFilter<Expense> {
     private final ExpenseRepository expenseRepository;
 
     public ManageExpenseService(ExpenseRepository expenseRepository) {
@@ -58,8 +59,8 @@ public class ManageExpenseService implements Save<Expense>, Update<Expense>, Fin
 
 
     @Override
-    public List<Category> findByFilter(Category filter) {
-        return null;
+    public List<Expense> findByFilter(Long id) {
+        return expenseRepository.findAllByCategoryId(id);
 
     }
 }

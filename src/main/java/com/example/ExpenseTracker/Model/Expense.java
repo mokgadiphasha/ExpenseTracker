@@ -13,15 +13,16 @@ public class Expense {
         Double amount;
         LocalDate date;
         String description;
-        Long  user_id;
-        Long category_id;
+        Long userId;
+        Long categoryId;
 
-        public Expense(Double amount, String description, Long user_id, Long category_id) {
+        public Expense(Double amount, String description, Long userId,
+                       Long categoryId,LocalDate date) {
                 this.amount = amount;
                 this.description = description;
-                this.user_id = user_id;
-                this.category_id = category_id;
-                this.date = LocalDate.now();
+                this.userId = userId;
+                this.categoryId = categoryId;
+                this.date = date;
         }
 
         public Long getId() {
@@ -57,18 +58,18 @@ public class Expense {
         }
 
         public @NotBlank Long getUser() {
-                return user_id;
+                return userId;
         }
 
         public void setUser(@NotBlank Long user_id) {
-                this.user_id = user_id;
+                this.userId = user_id;
         }
 
         public @NotBlank Long getCategory() {
-                return category_id;
+                return categoryId;
         }
 
         public void setCategory(@NotBlank Long category_id) {
-                this.category_id = category_id;
+                this.categoryId = category_id;
         }
 }
