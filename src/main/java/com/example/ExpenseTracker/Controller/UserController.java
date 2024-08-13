@@ -2,7 +2,6 @@ package com.example.ExpenseTracker.Controller;
 
 import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Service.User.ManageUserService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +17,19 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody User user){
-        manageUserService.save(user);
+        manageUserService.saveExpense(user);
     }
 
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id){
-        return manageUserService.findEntityById(id);
+        return manageUserService.findExpenseById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void UpdateUser(@PathVariable Long id, @RequestBody User user){
-        manageUserService.updateEntity(id,user);
+        manageUserService.updateExpense(id,user);
     }
 
 

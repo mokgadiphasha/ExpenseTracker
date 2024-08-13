@@ -20,28 +20,28 @@ public class ManageUserService implements Save<User> , FindBy<User>, Update<User
 
 
     @Override
-    public void save(User entity) {
-        userRepository.save(entity);
+    public void saveExpense(User expense) {
+        userRepository.save(expense);
     }
 
 
     @Override
-    public User findEntityById(Long id) {
+    public User findExpenseById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
 
     }
 
     @Override
-    public void updateEntity(Long id, User entity) {
+    public void updateExpense(Long id, User expense) {
         Optional<User> userOptional = userRepository.findById(id);
         User user;
 
         if(userOptional.isPresent()){
             user = userOptional.get();
-            user.setEmail(entity.getEmail());
-            user.setPassword(entity.getPassword());
-            user.setUsername(entity.getUsername());
+            user.setEmail(expense.getEmail());
+            user.setPassword(expense.getPassword());
+            user.setUsername(expense.getUsername());
             userRepository.save(user);
 
         } else{
