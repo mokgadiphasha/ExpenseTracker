@@ -9,12 +9,12 @@ import java.time.LocalDate;
 @Table(value="Expense")
 public class Expense {
         @Id
-        Long id;
-        Double amount;
-        LocalDate date;
-        String description;
-        Long userId;
-        Long categoryId;
+        private Long id;
+        private Double amount;
+        private LocalDate date;
+        private String description;
+        private Long userId;
+        private Long categoryId;
 
         public Expense(Double amount, String description, Long userId,
                        Long categoryId,LocalDate date) {
