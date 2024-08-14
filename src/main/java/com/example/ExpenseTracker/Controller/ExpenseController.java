@@ -1,6 +1,7 @@
 package com.example.ExpenseTracker.Controller;
 
 import com.example.ExpenseTracker.Model.Expense;
+import com.example.ExpenseTracker.Service.Expense.BaseExpenseCRUDServiceManager;
 import com.example.ExpenseTracker.Service.Expense.ExpenseServiceManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,9 @@ import java.util.List;
 @RequestMapping("/api/expenses")
 public class ExpenseController {
 
-    private final ExpenseServiceManager expenseServiceManager;
+    private final BaseExpenseCRUDServiceManager expenseServiceManager;
 
-    public ExpenseController(ExpenseServiceManager expenseServiceManager) {
+    public ExpenseController(BaseExpenseCRUDServiceManager expenseServiceManager) {
         this.expenseServiceManager = expenseServiceManager;
     }
 

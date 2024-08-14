@@ -33,6 +33,7 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager {
     public void updateExpense(Long id, Expense expense) {
         Optional<Expense> expenseOptional = expenseRepository.findById(id);
         Expense oldExpense;
+//        expenseOptional.ifPresent(expense ->);
 
         if(expenseOptional.isPresent()){
             oldExpense = expenseOptional.get();
