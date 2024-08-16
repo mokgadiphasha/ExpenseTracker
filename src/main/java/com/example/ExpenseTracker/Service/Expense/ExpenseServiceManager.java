@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager {
+public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , ExpenseFilter{
     private final ExpenseRepository expenseRepository;
 
     public ExpenseServiceManager(ExpenseRepository expenseRepository) {
