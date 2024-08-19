@@ -14,7 +14,7 @@ public class Expense {
         private LocalDate date;
         private String description;
         private Long userId;
-        private Long categoryId;
+        private Long categoryId ;
 
         public Expense(Double amount, String description, Long userId,
                        Long categoryId,LocalDate date) {
