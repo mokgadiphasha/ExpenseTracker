@@ -1,25 +1,25 @@
 package com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary;
 
-import com.example.ExpenseTracker.Model.Category;
+import com.example.ExpenseTracker.Model.CategoryExpense;
 
 import java.util.List;
 
 public class CategoryBreakdownResponse {
-    private List<Category> categoryExpenses;
+    private List<CategoryExpense> categoryExpenses;
     private String currency = "Rand";
 
 
-    public CategoryBreakdownResponse(List<Category> categoryExpenses) {
+    public CategoryBreakdownResponse(List<CategoryExpense> categoryExpenses) {
         this.categoryExpenses = categoryExpenses;
     }
 
 
-    public List<Category> getCategoryExpenses() {
+    public List<CategoryExpense> getCategoryExpenses() {
         return categoryExpenses;
     }
 
 
-    public void setCategoryExpenses(List<Category> categoryExpenses) {
+    public void setCategoryExpenses(List<CategoryExpense> categoryExpenses) {
         this.categoryExpenses = categoryExpenses;
     }
 
