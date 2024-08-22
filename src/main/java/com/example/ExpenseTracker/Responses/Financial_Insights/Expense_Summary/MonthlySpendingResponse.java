@@ -8,11 +8,9 @@ public class MonthlySpendingResponse {
     List<Month> months;
     String currency = "Rand";
 
-
     public MonthlySpendingResponse(List<Month> months) {
         this.months = months;
     }
-
 
     public List<Month> getMonths() {
         return months;

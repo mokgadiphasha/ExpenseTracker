@@ -9,6 +9,6 @@ import java.time.LocalDate;
 public interface ExpenseSummaryServiceManager {
     ExpenseSummaryResponse summaryBetween(Long userId, LocalDate start, LocalDate end);
     CategoryBreakdownResponse categoryBreakdown(Long userId);
-    MonthlySpendingResponse monthlySpending(Long userId);
+    MonthlySpendingResponse monthlySpending(LocalDate start,LocalDate end,Long userId);
 
 }

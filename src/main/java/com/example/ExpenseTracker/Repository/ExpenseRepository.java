@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ExpenseRepository extends ListCrudRepository<Expense,Long> , CustomExpenseRepository{
    List<Expense> findAllByCategoryId(Long categoryId);
-//   Double sumAmountByDateBetweenAndUserId(LocalDate start, LocalDate end, Long userId);
+
 }

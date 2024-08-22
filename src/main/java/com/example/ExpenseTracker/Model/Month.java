@@ -3,27 +3,33 @@ package com.example.ExpenseTracker.Model;
 import java.time.LocalDate;
 
 public class Month {
-    private LocalDate month;
     private Double totalExpense;
-
-    public Month(LocalDate month, Double totalExpense) {
-        this.month = month;
-        this.totalExpense = totalExpense;
-    }
+    private int year;
+    private int month;
 
     public Double getTotalExpense() {
         return totalExpense;
     }
 
+
     public void setTotalExpense(Double totalExpense) {
         this.totalExpense = totalExpense;
     }
 
-    public LocalDate getMonth() {
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(LocalDate month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 }
