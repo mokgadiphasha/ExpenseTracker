@@ -31,20 +31,20 @@ public class FinancialInsightsController {
     }
 
 
-    @GetMapping("/category-breakdown/{id}")
-    public CategoryBreakdownResponse getCategoryBreakdown(@PathVariable Long id){
-        return expenseSummaryServiceManager.categoryBreakdown(id);
+    @GetMapping("/category-breakdown/{userId}")
+    public CategoryBreakdownResponse getCategoryBreakdown(@PathVariable Long userId){
+        return expenseSummaryServiceManager.categoryBreakdown(userId);
     }
 
 
-    @GetMapping("/trends/monthly/{id}/{startDate}/{endDate}")
+    @GetMapping("/trends/monthly/{userId}/{startDate}/{endDate}")
     public MonthlySpendingResponse getMonthlySpending(
-            @PathVariable Long id,
+            @PathVariable Long userId,
             @PathVariable LocalDate startDate,
             @PathVariable LocalDate endDate){
 
         return expenseSummaryServiceManager
-                .monthlySpending(startDate,endDate,id);
+                .monthlySpending(startDate,endDate,userId);
 
     }
 

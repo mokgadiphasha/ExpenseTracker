@@ -1,5 +1,6 @@
 package com.example.ExpenseTracker.Service.Financial_Insights.Expense_Summary;
 
+import com.example.ExpenseTracker.Exceptions.GlobalExceptionHandler;
 import com.example.ExpenseTracker.Model.Month;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
 import com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary.CategoryBreakdownResponse;
@@ -21,9 +22,17 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
 
     @Override
     public ExpenseSummaryResponse summaryBetween(Long UserId, LocalDate start, LocalDate end) {
-        Double totalExpense = expenseRepository
-                .sumAmountByDateBetweenAndUserId(start,end,UserId);
-               return new ExpenseSummaryResponse(totalExpense);
+        if(start.isBefore(end)){
+            Double totalExpense = expenseRepository
+                    .sumAmountByDateBetweenAndUserId(start,end,UserId);
+            return new ExpenseSummaryResponse(totalExpense);
+        }
+        else{
+            throw new GlobalExceptionHandler("An error occurred: " +
+                    "start date " + start.toString()+" is after end date "
+                    +end.toString()+".");
+        }
+
 
     }
 
@@ -37,10 +46,15 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
 
     @Override
     public MonthlySpendingResponse monthlySpending(LocalDate start, LocalDate end, Long userId) {
-        List<Month> months = expenseRepository
-                .sumAmountByMonthBetweenAndUserId(start,end,userId);
-        return new MonthlySpendingResponse(months);
-
+        if(start.isAfter(end)){
+            List<Month> months = expenseRepository
+                    .sumAmountByMonthBetweenAndUserId(start,end,userId);
+            return new MonthlySpendingResponse(months);
+        } else{
+            throw new GlobalExceptionHandler("An error occurred: " +
+                    "start date " + start.toString()+" is after end date"
+                    +end.toString()+".");
+        }
     }
 
 }

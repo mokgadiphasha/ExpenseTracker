@@ -1,5 +1,6 @@
 package com.example.ExpenseTracker.Service.Expense;
 
+import com.example.ExpenseTracker.Exceptions.GlobalExceptionHandler;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,10 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
 
     @Override
-    public Expense findExpenseById(Long id) {
-        Optional<Expense> expense = expenseRepository.findById(id);
-        return expense.orElse(null);
+    public Expense findExpenseById(Long id,Long userId) {
+        Optional<Expense> expense = expenseRepository.findByIdAndUserId(id,userId);
+        return expense.orElseThrow(() -> new GlobalExceptionHandler("An error occurred: Expense with id: " + id.toString()
+                + " or user with id: " +userId.toString()));
     }
 
 
@@ -33,7 +35,6 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
     public void updateExpense(Long id, Expense expense) {
         Optional<Expense> expenseOptional = expenseRepository.findById(id);
         Expense oldExpense;
-//        expenseOptional.ifPresent(expense ->);
 
         if(expenseOptional.isPresent()){
             oldExpense = expenseOptional.get();
@@ -41,19 +42,26 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
             expenseRepository.save(expense);
 
         } else{
+            throw new GlobalExceptionHandler("An error occurred: Expense with id: "
+            + id +" could not be updated.");
 
         }
     }
 
 
     @Override
-    public List<Expense> findByFilter(Long id) {
-        return expenseRepository.findAllByCategoryId(id);
+    public List<Expense> findByFilter(Long categoryId,Long userId) {
+        return expenseRepository.findAllByCategoryIdAndUserId(categoryId,userId);
     }
 
 
     @Override
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Expense> getAllExpensesByUser(Long userId) {
+        return expenseRepository.findAllByUserId(userId);
     }
 }

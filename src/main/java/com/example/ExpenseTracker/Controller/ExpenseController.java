@@ -29,29 +29,38 @@ public class ExpenseController {
     }
 
 
-    @GetMapping("/{id}")
-    public Expense getExpense(@PathVariable Long id){
-        return expenseFilterManager.findExpenseById(id);
+    @GetMapping("/{expenseId}/{userId}")
+    public Expense getExpense(
+            @PathVariable Long expenseId,
+            @PathVariable Long userId){
+        return expenseFilterManager.findExpenseById(expenseId,userId);
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/{expenseId}")
     @ResponseStatus(HttpStatus.OK)
-    public void UpdateExpense(@PathVariable Long id, @RequestBody Expense expense){
-        expenseServiceManager.updateExpense(id,expense);
+    public void UpdateExpense(@PathVariable Long expenseId, @RequestBody Expense expense){
+        expenseServiceManager.updateExpense(expenseId,expense);
     }
 
 
-    @DeleteMapping("/{id}")
-    public void deleteExpense(@PathVariable Long id){
-        expenseServiceManager.deleteExpense(id);
+    @DeleteMapping("/{expenseId}")
+    public void deleteExpense(@PathVariable Long expenseId){
+        expenseServiceManager.deleteExpense(expenseId);
     }
 
 
-    @GetMapping("/filter/{id}")
-    public List<Expense> getExpenseByCategory(@PathVariable Long id){
-        return expenseFilterManager.findByFilter(id);
+    @GetMapping("/filter/{categoryId}/{userId}")
+    public List<Expense> getExpenseByCategory(
+            @PathVariable Long categoryId,
+            @PathVariable Long userId){
+        return expenseFilterManager.findByFilter(categoryId,userId);
     }
 
+
+    @GetMapping("/all/{userId}")
+    public List<Expense> getAllExpensesByUser(@PathVariable Long userId){
+        return expenseServiceManager.getAllExpensesByUser(userId);
+    }
 
 }

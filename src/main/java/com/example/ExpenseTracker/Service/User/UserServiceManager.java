@@ -1,5 +1,6 @@
 package com.example.ExpenseTracker.Service.User;
 
+import com.example.ExpenseTracker.Exceptions.GlobalExceptionHandler;
 import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,22 @@ public class UserServiceManager implements BaseUserCRUDServiceManager{
     @Override
     public User findUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return user.orElseThrow(()->
+                new GlobalExceptionHandler("User with id: "
+                        + id+ " does not exist."));
     }
 
 
     @Override
     public void saveUser(User user) {
-        userRepository.save(user);
+        String username = user.getUsername();
+        String email = user.getEmail();
+        if(!userRepository.existsByUsernameAndEmail(username,email)){
+            userRepository.save(user);
+        } else {
+            throw new GlobalExceptionHandler("User already registered.");
+        }
+
     }
 
 
@@ -38,7 +48,8 @@ public class UserServiceManager implements BaseUserCRUDServiceManager{
             userRepository.save(user);
 
         } else{
-
+            throw new GlobalExceptionHandler("An error occurred: User with id: " + id.toString()
+            + " could not be updated.");
         }
     }
 }
