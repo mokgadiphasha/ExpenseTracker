@@ -25,11 +25,11 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
     @Override
     public List<CategoryExpense> categoryBreakdownQuery(Long userId){
 
-        String sql = "SELECT user_id,category_id,SUM(amount) FROM \"Expense\" " +
-                    "AS total_amount "+
-                    "WHERE user_id = ? " +
-                    "GROUP BY category_id " +
-                    "ORDER BY category_id;";
+        String sql = "SELECT user_id, category_id, SUM(amount) AS total_amount " +
+                "FROM \"Expense\"" +
+                "WHERE user_id = ? " +
+                "GROUP BY user_id, category_id " +
+                "ORDER BY category_id;";
 
             return jdbcTemplate.query(sql,new Object[]{userId},
                     new RowMapper<CategoryExpense>(){
@@ -38,7 +38,7 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
                 public CategoryExpense mapRow(ResultSet rs, int rowNum) throws SQLException {
                     CategoryExpense expense = new CategoryExpense();
                     expense.setCategoryId(rs.getLong("category_id"));
-                    expense.setTotalExpense(rs.getDouble("SUM(amount)"));
+                    expense.setTotalExpense(rs.getDouble("total_amount"));
                     return expense;
 
                 }
@@ -51,9 +51,11 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
 
     @Override
     public Double sumAmountByDateBetweenAndUserId(LocalDate start, LocalDate end, Long userId) {
-        String sql = "SELECT SUM(amount) FROM \"Expense\" " +
-                "WHERE date Between ? AND ? " +
+
+        String sql = "SELECT SUM(amount) AS total_amount FROM \"Expense\" " +
+                "WHERE date BETWEEN ? AND ? " +
                 "AND user_id = ?;";
+
 
         return jdbcTemplate.queryForObject(sql,new Object[]{start,end,userId}, Double.class);
 
@@ -63,31 +65,25 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
     @Override
     public List<Month> sumAmountByMonthBetweenAndUserId(LocalDate start, LocalDate end, Long userId) {
 
-        String sql = "SELECT EXTRACT(YEAR FROM date), " +
-                "EXTRACT(MONTH FROM date), " +
+        String sql = "SELECT EXTRACT(YEAR FROM date) AS year, " +
+                "EXTRACT(MONTH FROM date) AS month, " +
                 "SUM(amount) AS total " +
                 "FROM \"Expense\" " +
                 "WHERE user_id = ? " +
                 "AND date BETWEEN ? AND ? " +
-                "GROUP BY EXTRACT(YEAR FROM date), " +
-                "EXTRACT(MONTH FROM date) " +
+                "GROUP BY year," +
+                "month " +
                 "ORDER BY " +
-                "EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date);";
+                "year, month;";
 
         return jdbcTemplate.query(sql, new Object[]{userId, start, end}, new RowMapper<Month>() {
             @Override
             public Month mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Month month = new Month();
                 month.setTotalExpense(rs.getDouble("total"));
-                month.setMonth(rs.getInt("EXTRACT(MONTH FROM date)"));
-                month.setYear(rs.getInt("EXTRACT(YEAR FROM date)"));
+                month.setMonth(rs.getInt("year"));
                 return month;
             }
         });
-
-
-
-
-
     }
 }

@@ -48,8 +48,11 @@ public class UserServiceManager implements BaseUserCRUDServiceManager{
             userRepository.save(user);
 
         } else{
-            throw new GlobalExceptionHandler("An error occurred: User with id: " + id.toString()
+            throw new GlobalExceptionHandler("An error occurred: " +
+                    "User with id: " + id.toString()
             + " could not be updated.");
         }
     }
+
+
 }

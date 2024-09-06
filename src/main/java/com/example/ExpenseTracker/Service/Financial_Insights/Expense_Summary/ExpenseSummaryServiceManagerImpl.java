@@ -46,13 +46,14 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
 
     @Override
     public MonthlySpendingResponse monthlySpending(LocalDate start, LocalDate end, Long userId) {
-        if(start.isAfter(end)){
+        if(!start.isAfter(end)){
+
             List<Month> months = expenseRepository
                     .sumAmountByMonthBetweenAndUserId(start,end,userId);
             return new MonthlySpendingResponse(months);
         } else{
             throw new GlobalExceptionHandler("An error occurred: " +
-                    "start date " + start.toString()+" is after end date"
+                    "start date " + start.toString()+" is after end date "
                     +end.toString()+".");
         }
     }
