@@ -52,8 +52,8 @@ class UserServiceManagerTest {
         User user = new User("John",
                 "John1234","johnDoe@email.com");
 
-       Exception exception = assertThrows(Exception.class,()-> serviceManager
-                .findUserById(2L));
+       Exception exception = assertThrows(Exception.class,
+               ()-> serviceManager.findUserById(2L));
 
        String message = "User with id: "
                 + 2 + " does not exist.";
@@ -110,11 +110,13 @@ class UserServiceManagerTest {
         User updatedUserDetails = new User("JohnDoe2",
                 "John1234","johnD@email.com");
 
-        when(repository.findById(1L)).thenReturn(Optional.of(oldUserDetails));
+        when(repository.findById(1L)).thenReturn(Optional
+                .of(oldUserDetails));
 
         serviceManager.updateUser(1L,updatedUserDetails);
 
-        verify(repository,times(1)).save(updatedUserDetails);
+        verify(repository,times(1))
+                .save(updatedUserDetails);
     }
 
 
@@ -125,8 +127,8 @@ class UserServiceManagerTest {
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(Exception.class,() -> serviceManager
-                .updateUser(1L,user));
+        Exception exception = assertThrows(Exception.class,
+                () -> serviceManager.updateUser(1L,user));
 
         String message = "An error occurred: " +
                 "User with id: " + 1

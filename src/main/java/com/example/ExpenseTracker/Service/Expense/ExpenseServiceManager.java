@@ -33,14 +33,14 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
 
     @Override
-    public void updateExpense(Long id, Expense expense) {
+    public void updateExpense(Long id, Expense updatedExpense) {
         Optional<Expense> expenseOptional = expenseRepository.findById(id);
         Expense oldExpense;
 
         if(expenseOptional.isPresent()){
             oldExpense = expenseOptional.get();
-            expense.setId(oldExpense.getId());
-            expenseRepository.save(expense);
+            updatedExpense.setId(oldExpense.getId());
+            expenseRepository.save(updatedExpense);
 
         } else{
             throw new GlobalExceptionHandler("An error occurred: Expense with id: "
@@ -58,7 +58,15 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
     @Override
     public void deleteExpense(Long id) {
-        expenseRepository.deleteById(id);
+        boolean isExpensePresent = expenseRepository.existsById(1L);
+        System.out.println(isExpensePresent);
+
+        if(isExpensePresent){
+            expenseRepository.deleteById(id);
+        } else {
+            throw new GlobalExceptionHandler("An error occurred: Expense with id: "
+                    + id +" could not be deleted.");
+        }
     }
 
     @Override

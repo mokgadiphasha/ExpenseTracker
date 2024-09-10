@@ -32,8 +32,6 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
                     "start date " + start.toString()+" is after end date "
                     +end.toString()+".");
         }
-
-
     }
 
 
