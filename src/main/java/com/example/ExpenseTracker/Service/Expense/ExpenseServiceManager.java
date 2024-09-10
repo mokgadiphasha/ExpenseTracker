@@ -20,7 +20,8 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
     @Override
     public Expense findExpenseById(Long id,Long userId) {
         Optional<Expense> expense = expenseRepository.findByIdAndUserId(id,userId);
-        return expense.orElseThrow(() -> new GlobalExceptionHandler("An error occurred: Expense with id: " + id.toString()
+        return expense.orElseThrow(() -> new GlobalExceptionHandler(
+                "An error occurred: Expense with id: " + id.toString()
                 + " or user with id: " +userId.toString()));
     }
 
