@@ -59,7 +59,6 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
     @Override
     public void deleteExpense(Long id) {
         boolean isExpensePresent = expenseRepository.existsById(1L);
-        System.out.println(isExpensePresent);
 
         if(isExpensePresent){
             expenseRepository.deleteById(id);

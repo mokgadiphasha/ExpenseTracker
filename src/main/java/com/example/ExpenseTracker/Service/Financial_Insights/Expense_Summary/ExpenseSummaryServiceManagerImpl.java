@@ -23,6 +23,7 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
     @Override
     public ExpenseSummaryResponse summaryBetween(Long UserId, LocalDate start, LocalDate end) {
         if(start.isBefore(end)){
+            System.out.println("start is before end.");
             Double totalExpense = expenseRepository
                     .sumAmountByDateBetweenAndUserId(start,end,UserId);
             return new ExpenseSummaryResponse(totalExpense);

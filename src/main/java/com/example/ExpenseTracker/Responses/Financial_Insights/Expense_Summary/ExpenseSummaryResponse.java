@@ -7,7 +7,6 @@ public class ExpenseSummaryResponse {
 
     public ExpenseSummaryResponse(Double expenseTotal) {
         this.expenseTotal = expenseTotal;
-        this.currency = currency;
     }
 
 
