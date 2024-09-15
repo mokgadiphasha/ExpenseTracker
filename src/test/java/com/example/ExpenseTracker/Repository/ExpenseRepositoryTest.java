@@ -3,6 +3,7 @@ package com.example.ExpenseTracker.Repository;
 import com.example.ExpenseTracker.Model.Expense;
 import org.junit.jupiter.api.BeforeAll;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -33,8 +34,8 @@ class ExpenseRepositoryTest {
     private static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:alpine");
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void setUp() {
         Expense expenseOne = new Expense(100.0,
                 "Purchase for new shoes",
                 1L,8L,LocalDate.now());
@@ -96,7 +97,17 @@ class ExpenseRepositoryTest {
 
 
     @Test
-    void shouldFindAllByUserId() {
+    void shouldNotFindAllByCategoryIdAndUserIdIfCategoryIdInvalid(){
+        List<Expense> expected = new ArrayList<>();
+        List<Expense> result = underTest
+                .findAllByCategoryIdAndUserId(11L,1L);
+
+        assertThat(result.size()).isEqualTo(expected.size());
+    }
+
+
+    @Test
+    void shouldFindAllByValidUserId() {
         List<Expense> expected = allBootstrappedExpenses;
         List<Expense> result = underTest.findAllByUserId(1L);
 
@@ -106,7 +117,17 @@ class ExpenseRepositoryTest {
 
 
     @Test
-    void findByIdAndUserId() {
+    void shouldNotFindAllByInvalidUserId(){
+        List<Expense> expected = new ArrayList<>();
+        List<Expense> result = underTest
+                .findAllByUserId(99L);
+
+        assertThat(result.size()).isEqualTo(expected.size());
+    }
+
+
+    @Test
+    void findByValidExpenseIdAndValidUserId() {
         Expense expected = new Expense(100.0,
                 "Purchase for new shoes",
                 1L,8L,LocalDate.now());
@@ -116,5 +137,14 @@ class ExpenseRepositoryTest {
 
         assertThat(result.isPresent()).isTrue();
         assertThat(result.get()).isEqualTo(expected);
+    }
+
+
+    @Test
+    void findByInvalidExpenseIdAndValidUserId(){
+        Optional<Expense> result = underTest
+                .findByIdAndUserId(1L,1L);
+
+        assertThat(result.isPresent()).isFalse();
     }
 }
