@@ -30,7 +30,7 @@ class UserRepositoryTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres =
+    private static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:alpine");
 
     @Test

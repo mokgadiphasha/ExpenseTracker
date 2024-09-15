@@ -2,6 +2,7 @@ package com.example.ExpenseTracker.Service.Expense;
 
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,6 +28,7 @@ class ExpenseServiceManagerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
 
     @Test
     void shouldFindExpenseById() {
