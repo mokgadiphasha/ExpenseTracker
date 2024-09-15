@@ -52,4 +52,15 @@ class UserRepositoryTest {
 
         assertThat(result).isTrue();
     }
+
+
+    @Test
+    void shouldNotExistByUsernameAndEmail(){
+        String username = "JaneD";
+        String email = "JaneD@gmail.com";
+        boolean result = underTest
+                .existsByUsernameAndEmail(username,email);
+
+        assertThat(result).isFalse();
+    }
 }
