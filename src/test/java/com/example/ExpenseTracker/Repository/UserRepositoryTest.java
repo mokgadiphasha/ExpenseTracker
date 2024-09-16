@@ -25,8 +25,6 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository underTest;
-    @Autowired
-    private CategoryRepository repo;
 
     @Container
     @ServiceConnection

@@ -8,3 +8,7 @@ INSERT INTO "Category" (name) VALUES ('Education');
 INSERT INTO "Category" (name) VALUES ('Clothing');
 INSERT INTO "Category" (name) VALUES ('Personal Care');
 INSERT INTO "Category" (name) VALUES ('Miscellaneous');
+
+--users
+
+INSERT INTO "User" (username,password,email) VALUES ('micheal','micheal123','micheal@email.com');

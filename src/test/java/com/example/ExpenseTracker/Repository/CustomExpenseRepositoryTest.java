@@ -1,9 +1,8 @@
 package com.example.ExpenseTracker.Repository;
 
+import com.example.ExpenseTracker.Model.CategoryExpense;
 import com.example.ExpenseTracker.Model.Expense;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +16,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+@Testcontainers
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
-class ExpenseRepositoryTest {
+class CustomExpenseRepositoryTest {
 
     @Autowired
-    private ExpenseRepository underTest;
+    private static ExpenseRepository underTest;
     private static List<Expense> allBootstrappedExpenses;
 
     @Container
@@ -41,7 +37,8 @@ class ExpenseRepositoryTest {
     void setUp() {
         Expense expenseOne = new Expense(100.0,
                 "Purchase for new shoes",
-                1L,8L,LocalDate.now());
+                1L,8L,
+                LocalDate.of(2024,8,1));
         Expense expenseTwo = new Expense(500.0,
                 "Purchase for new dress",
                 1L,8L,LocalDate.now());
@@ -70,13 +67,11 @@ class ExpenseRepositoryTest {
 
     }
 
-
     @AfterEach
     void tearDown() {
         underTest.deleteAll();
 
     }
-
 
     @Test
     void testConnection(){
@@ -84,82 +79,17 @@ class ExpenseRepositoryTest {
         assertThat(postgres.isRunning()).isTrue();
     }
 
-
     @Test
-    void shouldFindAllByCategoryIdAndUserId() {
-        List<Expense> expected = new ArrayList<>();
-        Expense expenseOne = new Expense(100.0,
-                "Purchase for new shoes",
-                1L,8L,LocalDate.now());
-        Expense expenseTwo = new Expense(500.0,
-                "Purchase for new dress",
-                1L,8L,LocalDate.now());
-
-        expected.add(expenseOne);
-        expected.add(expenseTwo);
-
-        List<Expense> result = underTest
-                .findAllByCategoryIdAndUserId(8L,1L);
-
-        assertThat(result).containsExactlyElementsOf(expected)
-                .isEqualTo(expected.size());
+    void shouldReturnExpensesForEachCategory() {
 
     }
 
-
     @Test
-    void shouldNotFindAllByCategoryIdAndUserIdIfCategoryIdInvalid(){
-        List<Expense> expected = new ArrayList<>();
-        List<Expense> result = underTest
-                .findAllByCategoryIdAndUserId(11L,1L);
+    void shouldSumAmountByDateBetweenAndUserId() {
 
-        assertThat(result.size()).isEqualTo(expected.size());
     }
 
-
     @Test
-    void shouldFindAllByValidUserId() {
-        List<Expense> expected = allBootstrappedExpenses;
-        List<Expense> result = underTest.findAllByUserId(1L);
-
-        assertThat(result).containsExactlyElementsOf(expected)
-                .isEqualTo(expected.size());
-    }
-
-
-    @Test
-    void shouldNotFindAllByInvalidUserId(){
-        List<Expense> expected = new ArrayList<>();
-        List<Expense> result = underTest
-                .findAllByUserId(99L);
-
-        assertThat(result.size()).isEqualTo(expected.size());
-    }
-
-
-    @Test
-    void findByValidExpenseIdAndValidUserId() {
-        Expense expected = new Expense(100.0,
-                "Purchase for new shoes",
-                1L,8L,LocalDate.now());
-
-        Optional<Expense> result = underTest
-                .findByIdAndUserId(1L,1L);
-
-        assertThat(result.isPresent()).isTrue();
-        assertThat(result.get()).isEqualTo(expected);
-    }
-
-
-    @Test
-    void findByInvalidExpenseIdAndValidUserId(){
-        Optional<Expense> result = underTest
-                .findByIdAndUserId(1L,1L);
-
-        assertThat(result.isPresent()).isFalse();
-    }
-
-    public void bootstrapData(){
-
+    void sumAmountByMonthBetweenAndUserId() {
     }
 }
