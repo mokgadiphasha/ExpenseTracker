@@ -12,3 +12,4 @@ INSERT INTO "Category" (name) VALUES ('Miscellaneous');
 --users
 
 INSERT INTO "User" (username,password,email) VALUES ('micheal','micheal123','micheal@email.com');
+INSERT INTO "User" (username,password,email) VALUES ('joe','joe123','joe@email.com');
