@@ -4,7 +4,9 @@ import com.example.ExpenseTracker.Model.CategoryExpense;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Model.Month;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -45,10 +47,8 @@ public class TestUtility {
         return repository.findAll()
                 .stream()
                 .filter(expense -> expense.getUser().equals(userId) &&
-                        expense.getDate().isEqual(start) ||
-                        expense.getDate().isAfter(start) &&
-                                expense.getDate().isBefore(end) ||
-                        expense.getDate().isEqual(end))
+                       expense.getDate().isAfter(start)
+                        && expense.getDate().isBefore(end))
                 .mapToDouble(Expense::getAmount)
                 .sum();
     }

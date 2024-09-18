@@ -31,7 +31,7 @@ class CustomExpenseRepositoryTest {
 
     @Autowired
     private ExpenseRepository underTest;
-    private TestUtility testUtility;
+    private final TestUtility testUtility = new TestUtility();
     private static List<Expense> allBootstrappedExpenses;
 
 
@@ -40,19 +40,20 @@ class CustomExpenseRepositoryTest {
     private static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:alpine");
 
+
     @BeforeEach
     void setUp() {
         Expense expenseOne = new Expense(100.0,
                 "Purchase for new shoes",
                 1L,1L,
                 LocalDate.of(2024,8,1));
-        Expense expenseTwo = new Expense(500.0,
+        Expense expenseTwo = new Expense(100.0,
                 "Purchase for new dress",
                 1L,2L,LocalDate.now());
         Expense expenseThree = new Expense(100.0,
                 "Paid for electricity",
                 1L,3L,LocalDate.now());
-        Expense expenseFour = new Expense(900.0,
+        Expense expenseFour = new Expense(100.0,
                 "Paid for annual medical tests",
                 1L,4L,
                 LocalDate.of(2024,5,20));
