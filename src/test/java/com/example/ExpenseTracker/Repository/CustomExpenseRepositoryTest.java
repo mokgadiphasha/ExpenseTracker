@@ -2,6 +2,8 @@ package com.example.ExpenseTracker.Repository;
 
 import com.example.ExpenseTracker.Model.CategoryExpense;
 import com.example.ExpenseTracker.Model.Expense;
+import com.example.ExpenseTracker.Model.Month;
+import com.example.ExpenseTracker.TestUtility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,17 +18,22 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-@Testcontainers
+
 @DataJdbcTest
+@Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CustomExpenseRepositoryTest {
 
     @Autowired
-    private static ExpenseRepository underTest;
+    private ExpenseRepository underTest;
+    private TestUtility testUtility;
     private static List<Expense> allBootstrappedExpenses;
+
 
     @Container
     @ServiceConnection
@@ -37,20 +44,20 @@ class CustomExpenseRepositoryTest {
     void setUp() {
         Expense expenseOne = new Expense(100.0,
                 "Purchase for new shoes",
-                1L,8L,
+                1L,1L,
                 LocalDate.of(2024,8,1));
         Expense expenseTwo = new Expense(500.0,
                 "Purchase for new dress",
-                1L,8L,LocalDate.now());
+                1L,2L,LocalDate.now());
         Expense expenseThree = new Expense(100.0,
                 "Paid for electricity",
                 1L,3L,LocalDate.now());
         Expense expenseFour = new Expense(900.0,
                 "Paid for annual medical tests",
-                1L,5L,
+                1L,4L,
                 LocalDate.of(2024,5,20));
         Expense expenseFive = new Expense(200.0,
-                "Paid school fees",1L,7L,
+                "Paid school fees",2L,7L,
                 LocalDate.of(2024,8,30));
 
         allBootstrappedExpenses = new ArrayList<>();
@@ -79,17 +86,65 @@ class CustomExpenseRepositoryTest {
         assertThat(postgres.isRunning()).isTrue();
     }
 
-    @Test
-    void shouldReturnExpensesForEachCategory() {
 
+    @Test
+    void testDatabase(){
+        assertThat(underTest.findAll().size())
+                .isEqualTo(allBootstrappedExpenses.size());
     }
 
     @Test
-    void shouldSumAmountByDateBetweenAndUserId() {
+    void shouldReturnExpensesForEachCategoryForUser() {
+        List<CategoryExpense> expected =
+                testUtility.categoryExpenseConverter(underTest,1L);
 
+        List<CategoryExpense> result = underTest
+                .categoryBreakdownQuery(1L);
+
+        assertThat(result.size()).isEqualTo(expected.size());
+
+        for (int i = 0; i < expected.size(); i++) {
+            CategoryExpense expectedExpense = expected.get(i);
+            CategoryExpense resultExpense = result.get(i);
+
+            assertThat(resultExpense.getTotalExpense())
+                    .isEqualTo(expectedExpense.getTotalExpense());
+
+            assertThat(resultExpense.getCategoryId())
+                    .isEqualTo(expectedExpense.getCategoryId());
+
+        }
     }
 
     @Test
-    void sumAmountByMonthBetweenAndUserId() {
+    void shouldSumAmountUsingTwoDatesAndUserId() {
+        LocalDate start = LocalDate.of(2024,5,1);
+        LocalDate end = LocalDate.of(2024,8,30);
+
+        Double expected = testUtility
+                .findSumOfAllExpenses(underTest,start,end,1L);
+
+        Double result = underTest
+                .sumAmountByDateBetweenAndUserId(start,end,1L);
+
+        assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    void shouldSumAmountPerMonthForUser() {
+        LocalDate start = LocalDate.of(2024,1,1);
+        LocalDate end = LocalDate.of(2024,8,30);
+
+        List<Month>  expected = testUtility
+                .findMonthlySumOfExpenses(underTest,start,end,1L);
+
+        List<Month> result = underTest
+                .sumAmountByMonthBetweenAndUserId(start,end,1L);
+
+        assertThat(result.size())
+                .isEqualTo(expected.size());
+
+    }
+
+
 }
