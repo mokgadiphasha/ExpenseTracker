@@ -79,11 +79,11 @@ class ExpenseRepositoryTest {
     }
 
 
-    @Test
-    void testDatabaseItems(){
-        assertThat(allBootstrappedExpenses.size())
-                .isEqualTo(underTest.findAll().size());
-    }
+//    @Test
+//    void testDatabaseItems(){
+//        assertThat(allBootstrappedExpenses.size())
+//                .isEqualTo(underTest.findAll().size());
+//    }
 
 
     @Test

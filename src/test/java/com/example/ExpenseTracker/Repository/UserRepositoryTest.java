@@ -38,12 +38,9 @@ class UserRepositoryTest {
     }
     @Test
     void shouldExistByUsernameAndEmail() {
-        User user = new User("JohnD",
-                "JohnD1234","JohnD@email.com");
+        User user = underTest.findById(1L).get();
         String username = user.getUsername();
         String email = user.getEmail();
-
-        underTest.save(user);
 
         boolean result = underTest
                 .existsByUsernameAndEmail(username,email);
