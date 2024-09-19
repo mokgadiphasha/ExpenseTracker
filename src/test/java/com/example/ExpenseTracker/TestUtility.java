@@ -7,7 +7,14 @@ import com.example.ExpenseTracker.Repository.ExpenseRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.test.web.servlet.MvcResult;
+import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonParseException;
+import org.testcontainers.shaded.com.fasterxml.jackson.core.type.TypeReference;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
@@ -81,5 +88,24 @@ public class TestUtility {
 
         return monthlyExpenses;
 
+    }
+
+    public <T> List<T> convertMVCResult(MvcResult mvcResult,
+                                        Class<T> clazz){
+        List<T> convertedResult;
+
+        try{
+            String jsonResponse = mvcResult.getResponse()
+                    .getContentAsString();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            convertedResult = objectMapper.readValue(jsonResponse,
+                    new TypeReference<List<T>>() {});
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return convertedResult;
     }
 }
