@@ -38,6 +38,24 @@ class ExpenseRepositoryTest {
     private static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:alpine");
 
+    @BeforeEach
+    void setUp() {
+        boostrapData();
+    }
+
+
+    @AfterEach
+    void tearDown() {
+        underTest.deleteAll();
+    }
+
+
+    @Test
+    void testDatabaseItems(){
+        assertThat(allBootstrappedExpenses.size())
+                .isEqualTo(underTest.findAll().size());
+    }
+
 
     @Test
     void testConnection(){
@@ -157,6 +175,39 @@ class ExpenseRepositoryTest {
                 .findByIdAndUserId(1L,1L);
 
         assertThat(result.isPresent()).isFalse();
+    }
+
+
+    public void boostrapData(){
+        Expense expenseOne = new Expense(100.0,
+                "Purchase for new shoes",
+                1L,8L,LocalDate.now());
+        Expense expenseTwo = new Expense(500.0,
+                "Purchase for new dress",
+                1L,8L,LocalDate.now());
+        Expense expenseThree = new Expense(100.0,
+                "Paid for electricity",
+                1L,3L,LocalDate.now());
+        Expense expenseFour = new Expense(900.0,
+                "Paid for annual medical tests",
+                1L,5L,
+                LocalDate.of(2024,5,20));
+        Expense expenseFive = new Expense(200.0,
+                "Paid school fees",2L,7L,
+                LocalDate.of(2024,8,30));
+
+        allBootstrappedExpenses = new ArrayList<>();
+
+        allBootstrappedExpenses.add(expenseOne);
+        allBootstrappedExpenses.add(expenseTwo);
+        allBootstrappedExpenses.add(expenseThree);
+        allBootstrappedExpenses.add(expenseFour);
+        allBootstrappedExpenses.add(expenseFive);
+
+        for (Expense expense: allBootstrappedExpenses){
+            underTest.save(expense);
+        }
+
     }
 
 }
