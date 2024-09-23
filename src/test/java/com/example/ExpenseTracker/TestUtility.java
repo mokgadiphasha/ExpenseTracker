@@ -4,19 +4,19 @@ import com.example.ExpenseTracker.Model.CategoryExpense;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Model.Month;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
-import org.springframework.context.annotation.Bean;
+import com.fasterxml.jackson.databind.JavaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MvcResult;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonParseException;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.type.TypeReference;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,12 @@ import java.util.stream.Collectors;
 @Component
 public class TestUtility {
 
-    public List<CategoryExpense> categoryExpenseConverter(ExpenseRepository repository,Long userId){
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
+    public List<CategoryExpense>
+    categoryExpenseConverter(ExpenseRepository repository,Long userId){
         List<CategoryExpense> categoryExpenseList = new ArrayList<>();
 
         Map<Long, Double> expenses = repository.findAll()
@@ -90,22 +95,46 @@ public class TestUtility {
 
     }
 
-    public <T> List<T> convertMVCResult(MvcResult mvcResult,
-                                        Class<T> clazz){
-        List<T> convertedResult;
+
+    public <T> List<T> convertMVCResultToList(MvcResult mvcResult,
+                                              Class<T> clazz){
 
         try{
             String jsonResponse = mvcResult.getResponse()
                     .getContentAsString();
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            convertedResult = objectMapper.readValue(jsonResponse,
-                    new TypeReference<List<T>>() {});
+            JavaType type = objectMapper.getTypeFactory()
+                    .constructCollectionType(List.class, clazz);
+            return objectMapper.readValue(jsonResponse,type);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return convertedResult;
+    }
+
+    public <T> String convertToJSON(T objectToSerialize){
+
+        try{
+            return objectMapper.writeValueAsString(objectToSerialize);
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public <T> T convertMVCResultToObject(MvcResult mvcResult,
+                                          Class<T> clazz){
+
+        try{
+            String jsonResponse = mvcResult.getResponse()
+                    .getContentAsString();
+            return objectMapper.readValue(jsonResponse,
+                    clazz);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

@@ -52,7 +52,8 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
     @Override
     public List<Expense> findByFilter(Long categoryId,Long userId) {
-        return expenseRepository.findAllByCategoryIdAndUserId(categoryId,userId);
+        return expenseRepository.
+                findAllByCategoryIdAndUserId(categoryId,userId);
     }
 
 

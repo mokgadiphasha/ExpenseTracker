@@ -1,5 +1,6 @@
 package com.example.ExpenseTracker.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -25,6 +26,8 @@ public class Expense {
                 this.date = date;
         }
 
+        public Expense(){}
+
         public Long getId() {
                 return id;
         }
@@ -33,11 +36,11 @@ public class Expense {
                 this.id = id;
         }
 
-        public @NotBlank Double getAmount() {
+        public Double getAmount() {
                 return amount;
         }
 
-        public void setAmount(@NotBlank Double amount) {
+        public void setAmount(Double amount) {
                 this.amount = amount;
         }
 
@@ -57,19 +60,20 @@ public class Expense {
                 this.date = date;
         }
 
-        public @NotBlank Long getUser() {
+        public Long getUser() {
                 return userId;
         }
 
-        public void setUser(@NotBlank Long user_id) {
+        public void setUser(Long user_id) {
                 this.userId = user_id;
         }
 
-        public @NotBlank Long getCategory() {
+        public Long getCategory() {
                 return categoryId;
         }
 
-        public void setCategory(@NotBlank Long category_id) {
+        public void setCategory(Long category_id) {
                 this.categoryId = category_id;
         }
+
 }
