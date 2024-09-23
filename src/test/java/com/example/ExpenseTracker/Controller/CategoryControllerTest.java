@@ -45,6 +45,7 @@ class CategoryControllerTest {
                 MockMvcRequestBuilders.get("/api/category"))
                 .andExpect(status().isOk())
                 .andReturn();
+
         List<Category> result =  testUtility
                 .convertMVCResultToList(mvcResult, Category.class);
 
