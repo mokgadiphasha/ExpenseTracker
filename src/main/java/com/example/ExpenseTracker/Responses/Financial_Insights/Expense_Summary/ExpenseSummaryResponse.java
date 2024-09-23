@@ -8,6 +8,7 @@ public class ExpenseSummaryResponse {
     public ExpenseSummaryResponse(Double expenseTotal) {
         this.expenseTotal = expenseTotal;
     }
+    public ExpenseSummaryResponse(){}
 
 
     public Double getExpenseTotal() {

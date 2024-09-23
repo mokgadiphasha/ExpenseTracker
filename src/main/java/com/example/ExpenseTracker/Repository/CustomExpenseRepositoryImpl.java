@@ -81,7 +81,8 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
             public Month mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Month month = new Month();
                 month.setTotalExpense(rs.getDouble("total"));
-                month.setMonth(rs.getInt("year"));
+                month.setMonth(rs.getInt("month"));
+                month.setYear(rs.getInt("year"));
                 return month;
             }
         });

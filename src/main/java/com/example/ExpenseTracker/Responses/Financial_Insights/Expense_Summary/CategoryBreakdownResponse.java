@@ -13,6 +13,8 @@ public class CategoryBreakdownResponse {
         this.categoryExpenses = categoryExpenses;
     }
 
+    public CategoryBreakdownResponse(){}
+
 
     public List<CategoryExpense> getCategoryExpenses() {
         return categoryExpenses;

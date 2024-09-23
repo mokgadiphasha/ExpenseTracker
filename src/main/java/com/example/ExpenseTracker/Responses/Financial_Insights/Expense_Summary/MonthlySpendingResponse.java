@@ -12,6 +12,8 @@ public class MonthlySpendingResponse {
         this.months = months;
     }
 
+    public MonthlySpendingResponse(){}
+
     public List<Month> getMonths() {
         return months;
     }
