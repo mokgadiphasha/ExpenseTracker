@@ -1,10 +1,7 @@
 package com.example.ExpenseTracker.Controller;
 
 import com.example.ExpenseTracker.Model.Expense;
-import com.example.ExpenseTracker.Repository.ExpenseRepository;
 import com.example.ExpenseTracker.TestUtility;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +19,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,14 +83,15 @@ class ExpenseControllerTest {
                 .isEqualTo(expected.getDescription());
     }
 
+
     @Test
-    void shouldGetExpense() throws Exception {
-        String expenseId = "1";
+    void shouldFindExpense() throws Exception {
+        String expenseId = "5";
         String userId = "3";
-        Expense expected = new Expense(600.00,
-                "had dinner at the food house restaurant",
-                3L,1L,LocalDate
-                .of(2024,9,20));
+        Expense expected = new Expense(500.00,
+                "Bought Flu Medication",
+                3L,5L,
+                LocalDate.of(2024,9,21));
         expected.setId(Long.valueOf(expenseId));
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
@@ -118,6 +113,18 @@ class ExpenseControllerTest {
                 .isEqualTo(expected.getDescription());
 
         assertThat(result.getCategory()).isEqualTo(expected.getCategory());
+
+    }
+
+
+    @Test
+    void shouldNotFindNonExistentExpense() throws Exception {
+        String expenseId = "99";
+        String userId = "3";
+
+        mockMvc.perform(get(url + "/" + expenseId
+                + "/" + userId))
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -158,6 +165,24 @@ class ExpenseControllerTest {
                 .isEqualTo(expected.getCategory());
 
     }
+
+
+    @Test
+    void shouldNotFindExpenseWithNonExistentCategoryId() throws Exception {
+        String categoryId = "99";
+        String userId = "3";
+
+       MvcResult mvcResult = mockMvc.perform(get(url + "/filter/"
+                + categoryId + "/" + userId))
+                .andExpect(status().isOk())
+               .andReturn();
+
+       List<Expense> expenses = testUtility
+               .convertMVCResultToList(mvcResult, Expense.class);
+
+       assertThat(expenses.size()).isEqualTo(0);
+    }
+
 
     @Test
     void shouldGetAllExpensesByUser() throws Exception {
@@ -226,17 +251,36 @@ class ExpenseControllerTest {
     }
 
     @Test
-    void deleteExpense() throws Exception {
-        mockMvc.perform(delete(url + "/1"))
-                .andExpect(status().isOk());
+    void shouldNotUpdateNonExistentExpense() throws Exception {
+        String expenseId = "99";
 
+
+        Expense updatedExpense = new Expense(1200.00,
+                "Paid school fees",
+                3L,7L,LocalDate
+                .of(2024,8,30));
+
+        String jsonString = testUtility.convertToJSON(updatedExpense);
+
+        mockMvc.perform(put(url + "/" + expenseId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    void deleteExpense() throws Exception {
         String expenseId = "1";
         String userId = "3";
+
+        mockMvc.perform(delete(url + "/" + expenseId))
+                .andExpect(status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders
                 .get(url + "/" + expenseId+ "/"
                     + userId))
                 .andExpect(status().isBadRequest());
-
     }
+
 }

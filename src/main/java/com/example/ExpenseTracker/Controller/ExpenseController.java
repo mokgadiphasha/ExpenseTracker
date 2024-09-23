@@ -38,7 +38,6 @@ public class ExpenseController {
 
 
     @PutMapping("/{expenseId}")
-    @ResponseStatus(HttpStatus.OK)
     public void UpdateExpense(@PathVariable Long expenseId, @RequestBody Expense expense){
         expenseServiceManager.updateExpense(expenseId,expense);
     }
