@@ -10,18 +10,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 class UserServiceManagerTest {
 
     @Mock
     private  UserRepository repository;
     @InjectMocks
     private UserServiceManager serviceManager;
+
 
     @BeforeEach
     void setUp() {

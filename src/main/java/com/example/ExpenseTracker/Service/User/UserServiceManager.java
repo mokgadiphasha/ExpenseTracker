@@ -1,22 +1,54 @@
 package com.example.ExpenseTracker.Service.User;
 
 import com.example.ExpenseTracker.Exceptions.GlobalExceptionHandler;
+import com.example.ExpenseTracker.Model.AuthRequest;
 import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Repository.UserRepository;
+import com.example.ExpenseTracker.Responses.Security.AuthResponse;
+import com.example.ExpenseTracker.Security.UserDetailsManagerService;
+import com.example.ExpenseTracker.Utility.JwtUtil;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserServiceManager implements BaseUserCRUDServiceManager{
+public class UserServiceManager implements BaseUserCRUDServiceManager,AuthenticateUser{
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsManagerService userDetailsManagerService;
 
-    public UserServiceManager(UserRepository userRepository) {
+    public UserServiceManager(UserRepository userRepository,
+                              PasswordEncoder passwordEncoder,
+                              AuthenticationManager authenticationManager,
+                              JwtUtil jwtUtil,
+                              UserDetailsManagerService userDetailsManagerService) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.userDetailsManagerService = userDetailsManagerService;
     }
 
     @Override
     public User findUserById(Long id) {
+
+//        for (User user: userRepository.findAll()) {
+//            System.out.println("{");
+//            System.out.println(user.getId());
+//            System.out.println(user.getUsername());
+//            System.out.println(user.getPassword());
+//            System.out.println("}");
+//
+//        }
+
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(()->
                 new GlobalExceptionHandler("User with id: "
@@ -29,6 +61,7 @@ public class UserServiceManager implements BaseUserCRUDServiceManager{
         String username = user.getUsername();
         String email = user.getEmail();
         if(!userRepository.existsByUsernameAndEmail(username,email)){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         } else {
             throw new GlobalExceptionHandler("User already registered.");
@@ -55,4 +88,24 @@ public class UserServiceManager implements BaseUserCRUDServiceManager{
     }
 
 
+    @Override
+    public AuthResponse createAuthentication(AuthRequest authRequest) {
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest
+                            .getUsername(), authRequest.getPassword())
+            );
+        } catch(Exception e){
+            throw new GlobalExceptionHandler("An error occurred Username: "
+                    + authRequest.getUsername() + " or password: " +
+                    authRequest.getPassword() + " incorrect.");
+        }
+
+        final UserDetails userDetails = userDetailsManagerService
+                .loadUserByUsername(authRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+        return new AuthResponse(jwt);
+    }
 }
