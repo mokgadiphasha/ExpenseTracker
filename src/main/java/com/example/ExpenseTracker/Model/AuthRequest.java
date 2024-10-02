@@ -1,8 +1,13 @@
 package com.example.ExpenseTracker.Model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class AuthRequest {
 
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
 
 

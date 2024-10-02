@@ -5,6 +5,7 @@ import com.example.ExpenseTracker.Model.User;
 import com.example.ExpenseTracker.Responses.Security.AuthResponse;
 import com.example.ExpenseTracker.Service.User.AuthenticateUser;
 import com.example.ExpenseTracker.Service.User.BaseUserCRUDServiceManager;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveUser(@RequestBody User user){
+    public void saveUser(@Valid @RequestBody User user){
         UserServiceManager.saveUser(user);
     }
 
@@ -35,12 +36,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void UpdateUser(@PathVariable Long id, @RequestBody User user){
+    public void UpdateUser(@Valid @PathVariable Long id, @RequestBody User user){
         UserServiceManager.updateUser(id,user);
     }
 
     @PostMapping("/login")
-    public AuthResponse createAuthentication (@RequestBody AuthRequest request){
+    public AuthResponse createAuthentication (@Valid @RequestBody AuthRequest request){
         return authenticateUserManager.createAuthentication(request);
     }
 

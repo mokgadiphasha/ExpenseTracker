@@ -4,6 +4,7 @@ import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Service.Expense.BaseExpenseCRUDServiceManager;
 import com.example.ExpenseTracker.Service.Expense.ExpenseFilter;
 import com.example.ExpenseTracker.Service.Expense.ExpenseServiceManager;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ExpenseController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveExpense(@RequestBody Expense expense){
+    public void saveExpense(@Valid @RequestBody Expense expense){
         expenseServiceManager.saveExpense(expense);
     }
 
@@ -38,7 +39,7 @@ public class ExpenseController {
 
 
     @PutMapping("/{expenseId}")
-    public void UpdateExpense(@PathVariable Long expenseId, @RequestBody Expense expense){
+    public void UpdateExpense(@Valid @PathVariable Long expenseId, @RequestBody Expense expense){
         expenseServiceManager.updateExpense(expenseId,expense);
     }
 

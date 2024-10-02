@@ -219,8 +219,6 @@ class ExpenseRepositoryTest {
             underTest.save(expense);
         }
 
-        System.out.println("THESE ARE ALL THE EXPENSES IN" +
-                " THE REPOSITORY: " + underTest.findAll().size());
 
     }
 

@@ -2,6 +2,7 @@ package com.example.ExpenseTracker.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -11,10 +12,15 @@ import java.time.LocalDate;
 public class Expense {
         @Id
         private Long id;
+        @NotNull
         private Double amount;
+        @NotNull
         private LocalDate date;
+        @NotBlank
         private String description;
+        @NotNull
         private Long userId;
+        @NotNull
         private Long categoryId ;
 
         public Expense(Double amount, String description, Long userId,
