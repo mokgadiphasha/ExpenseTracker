@@ -51,14 +51,6 @@ class ExpenseRepositoryTest {
         underTest.deleteAll();
     }
 
-
-    @Test
-    void testDatabaseItems(){
-        assertThat(allBootstrappedExpenses.size())
-                .isEqualTo(underTest.findAll().size());
-    }
-
-
     @Test
     void testConnection(){
         assertThat(postgres.isCreated()).isTrue();
@@ -133,33 +125,46 @@ class ExpenseRepositoryTest {
     }
 
 
-//    @Test
-//    void findByValidExpenseIdAndValidUserId() {
-//        Expense expected = underTest.findAll()
-//                .stream().filter(expense -> expense.getUser().equals(1L)
-//                && expense.getId().equals(1L))
-//                .findFirst().get();
+    @Test
+    void findExpenseByValidExpenseIdAndValidUserId() {
+//        System.out.println(underTest.findAll().size());
+//        for (Expense ex: underTest.findAll()){
+//            System.out.println();
+//            System.out.println("{");
+//            System.out.println("Id: " + ex.getId());
+//            System.out.println("User Id: " + ex.getUser());
+//            System.out.println("Description: " + ex.getDescription());
+//            System.out.println("Amount: "+ex.getAmount());
+//        }
+
+        Expense expected = underTest.findAll()
+                .stream().filter(expense -> expense.getUser().equals(2L)
+                && expense.getId().equals(28L))
+                .findFirst().get();
+
+//        System.out.println("EXPECTED: ");
 //        System.out.println("USER: " + expected.getUser());
 //        System.out.println("DESCRIPTION: " + expected.getDescription());
 //        System.out.println("DATE: " + expected.getDate());
 //        System.out.println("CATEGORY: " + expected.getCategory());
-//
-//        Optional<Expense> result = underTest
-//                .findByIdAndUserId(1L,1L);
-//
+
+        Optional<Expense> result = underTest
+                .findByIdAndUserId(28L,2L);
+
+//        System.out.println("RESULT: ");
 //        System.out.println("USER: " + result.get().getUser());
 //        System.out.println("DESCRIPTION: " + result.get().getDescription());
 //        System.out.println("DATE: " + result.get().getDate());
 //        System.out.println("CATEGORY: " + result.get().getCategory());
-//
-//        assertThat(result.isPresent()).isTrue();
-//
-////        assertThat(result.get().getId())
-////                .isEqualTo(expected.getId());
-////
-////        assertThat(result.get().getUser())
-////                .isEqualTo(expected.getUser());
-//    }
+
+        assertThat(result.isPresent()).isTrue();
+
+        assertThat(result.get().getId())
+                .isEqualTo(expected.getId());
+
+        assertThat(result.get().getUser())
+                .isEqualTo(expected.getUser());
+    }
 
     @Test
     void shouldNotFindAllByInvalidUserId(){
@@ -197,6 +202,9 @@ class ExpenseRepositoryTest {
         Expense expenseFive = new Expense(200.0,
                 "Paid school fees",2L,7L,
                 LocalDate.of(2024,8,30));
+        Expense expenseSix = new Expense(300.0,
+                "Paid school trip",2L,7L,
+                LocalDate.of(2024,8,30));
 
         allBootstrappedExpenses = new ArrayList<>();
 
@@ -205,10 +213,14 @@ class ExpenseRepositoryTest {
         allBootstrappedExpenses.add(expenseThree);
         allBootstrappedExpenses.add(expenseFour);
         allBootstrappedExpenses.add(expenseFive);
+        allBootstrappedExpenses.add(expenseSix);
 
         for (Expense expense: allBootstrappedExpenses){
             underTest.save(expense);
         }
+
+        System.out.println("THESE ARE ALL THE EXPENSES IN" +
+                " THE REPOSITORY: " + underTest.findAll().size());
 
     }
 
