@@ -75,11 +75,11 @@ class ExpenseControllerTest {
 
 
         assertThat(result).isNotNull();
-        assertThat(result.getUser()).isEqualTo(expected.getUser());
+        assertThat(result.getUserId()).isEqualTo(expected.getUserId());
         assertThat(result.getId()).isEqualTo(expected.getId());
         assertThat(result.getDate()).isEqualTo(expected.getDate());
         assertThat(result.getAmount()).isEqualTo(expected.getAmount());
-        assertThat(result.getCategory()).isEqualTo(expected.getCategory());
+        assertThat(result.getCategoryId()).isEqualTo(expected.getCategoryId());
 
         assertThat(result.getDescription())
                 .isEqualTo(expected.getDescription());
@@ -106,7 +106,7 @@ class ExpenseControllerTest {
                 .convertMVCResultToObject(mvcResult, Expense.class);
 
         assertThat(result).isNotNull();
-        assertThat(result.getUser()).isEqualTo(expected.getUser());
+        assertThat(result.getUserId()).isEqualTo(expected.getUserId());
         assertThat(result.getId()).isEqualTo(expected.getId());
         assertThat(result.getDate()).isEqualTo(expected.getDate());
         assertThat(result.getAmount()).isEqualTo(expected.getAmount());
@@ -114,7 +114,7 @@ class ExpenseControllerTest {
         assertThat(result.getDescription())
                 .isEqualTo(expected.getDescription());
 
-        assertThat(result.getCategory()).isEqualTo(expected.getCategory());
+        assertThat(result.getCategoryId()).isEqualTo(expected.getCategoryId());
 
     }
 
@@ -151,8 +151,8 @@ class ExpenseControllerTest {
         assertThat(expenses.size()).isEqualTo(2);
         assertThat(firstExpenseInList).isNotNull();
 
-        assertThat(firstExpenseInList.getUser())
-                .isEqualTo(expected.getUser());
+        assertThat(firstExpenseInList.getUserId())
+                .isEqualTo(expected.getUserId());
 
         assertThat(firstExpenseInList.getDate())
                 .isEqualTo(expected.getDate());
@@ -163,8 +163,8 @@ class ExpenseControllerTest {
         assertThat(firstExpenseInList.getDescription())
                 .isEqualTo(expected.getDescription());
 
-        assertThat(firstExpenseInList.getCategory())
-                .isEqualTo(expected.getCategory());
+        assertThat(firstExpenseInList.getCategoryId())
+                .isEqualTo(expected.getCategoryId());
 
     }
 
@@ -207,8 +207,8 @@ class ExpenseControllerTest {
         assertThat(expenses.size()).isEqualTo(4);
         assertThat(firstExpenseInList).isNotNull();
 
-        assertThat(firstExpenseInList.getUser())
-                .isEqualTo(expected.getUser());
+        assertThat(firstExpenseInList.getUserId())
+                .isEqualTo(expected.getUserId());
 
         assertThat(firstExpenseInList.getDate())
                 .isEqualTo(expected.getDate());
@@ -219,8 +219,8 @@ class ExpenseControllerTest {
         assertThat(firstExpenseInList.getDescription())
                 .isEqualTo(expected.getDescription());
 
-        assertThat(firstExpenseInList.getCategory())
-                .isEqualTo(expected.getCategory());
+        assertThat(firstExpenseInList.getCategoryId())
+                .isEqualTo(expected.getCategoryId());
     }
 
     @Test

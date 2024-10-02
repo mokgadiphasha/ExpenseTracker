@@ -2,7 +2,6 @@ package com.example.ExpenseTracker.Repository;
 
 import com.example.ExpenseTracker.Model.Expense;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +61,7 @@ class ExpenseRepositoryTest {
     void shouldFindAllByCategoryIdAndUserId() {
         List<Expense> expected = underTest.findAll()
                 .stream().filter(expense -> expense
-                        .getCategory().equals(8L))
+                        .getCategoryId().equals(8L))
                 .collect(Collectors.toList());
 
         List<Expense> result = underTest
@@ -72,11 +71,11 @@ class ExpenseRepositoryTest {
             Expense expectedExpense = expected.get(i);
             Expense resultExpense = result.get(i);
 
-            assertThat(resultExpense.getUser())
-                    .isEqualTo(expectedExpense.getUser());
+            assertThat(resultExpense.getUserId())
+                    .isEqualTo(expectedExpense.getUserId());
 
-            assertThat(resultExpense.getCategory())
-                    .isEqualTo(expectedExpense.getCategory());
+            assertThat(resultExpense.getCategoryId())
+                    .isEqualTo(expectedExpense.getCategoryId());
 
             assertThat(resultExpense.getDescription())
                     .isEqualTo(expectedExpense.getDescription());
@@ -107,7 +106,7 @@ class ExpenseRepositoryTest {
     @Test
     void shouldFindAllExpensesByUserWithValidUserId() {
         List<Expense> expected = underTest.findAll()
-                .stream().filter(expense -> expense.getUser()
+                .stream().filter(expense -> expense.getUserId()
                         .equals(1L)).collect(Collectors.toList());
 
         List<Expense> result = underTest.findAllByUserId(1L);
@@ -119,8 +118,8 @@ class ExpenseRepositoryTest {
             Expense expectedExpense = expected.get(i);
             Expense resultExpense = result.get(i);
 
-            assertThat(resultExpense.getUser())
-                    .isEqualTo(expectedExpense.getUser());
+            assertThat(resultExpense.getUserId())
+                    .isEqualTo(expectedExpense.getUserId());
         }
     }
 
@@ -138,7 +137,7 @@ class ExpenseRepositoryTest {
 //        }
 
         Expense expected = underTest.findAll()
-                .stream().filter(expense -> expense.getUser().equals(2L)
+                .stream().filter(expense -> expense.getUserId().equals(2L)
                 && expense.getId().equals(28L))
                 .findFirst().get();
 
@@ -162,8 +161,8 @@ class ExpenseRepositoryTest {
         assertThat(result.get().getId())
                 .isEqualTo(expected.getId());
 
-        assertThat(result.get().getUser())
-                .isEqualTo(expected.getUser());
+        assertThat(result.get().getUserId())
+                .isEqualTo(expected.getUserId());
     }
 
     @Test

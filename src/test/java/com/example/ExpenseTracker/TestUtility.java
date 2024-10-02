@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 import java.io.IOException;
@@ -36,9 +33,9 @@ public class TestUtility {
 
         Map<Long, Double> expenses = repository.findAll()
                 .stream()
-                .filter(expense -> expense.getUser().equals(userId))
+                .filter(expense -> expense.getUserId().equals(userId))
                 .collect(Collectors.groupingBy(
-                        Expense::getCategory,Collectors
+                        Expense::getCategoryId,Collectors
                                 .summingDouble(Expense::getAmount)));
 
         for (Map.Entry<Long,Double> expense: expenses.entrySet()){
@@ -58,7 +55,7 @@ public class TestUtility {
                                        LocalDate start,LocalDate end,Long userId){
         return repository.findAll()
                 .stream()
-                .filter(expense -> expense.getUser().equals(userId) &&
+                .filter(expense -> expense.getUserId().equals(userId) &&
                        expense.getDate().isAfter(start)
                         && expense.getDate().isBefore(end))
                 .mapToDouble(Expense::getAmount)
@@ -72,7 +69,7 @@ public class TestUtility {
 
         Map<YearMonth,Double> expenses = repository.findAll()
                 .stream()
-                .filter(expense -> expense.getUser().equals(userId) &&
+                .filter(expense -> expense.getUserId().equals(userId) &&
                         expense.getDate().isEqual(start) ||
                         expense.getDate().isAfter(start) &&
                                 expense.getDate().isBefore(end) ||

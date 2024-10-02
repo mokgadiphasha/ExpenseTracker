@@ -1,6 +1,5 @@
 package com.example.ExpenseTracker.Model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -66,19 +65,19 @@ public class Expense {
                 this.date = date;
         }
 
-        public Long getUser() {
+        public Long getUserId() {
                 return userId;
         }
 
-        public void setUser(Long user_id) {
+        public void setUserId(Long user_id) {
                 this.userId = user_id;
         }
 
-        public Long getCategory() {
+        public Long getCategoryId() {
                 return categoryId;
         }
 
-        public void setCategory(Long category_id) {
+        public void setCategoryId(Long category_id) {
                 this.categoryId = category_id;
         }
 

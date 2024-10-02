@@ -2,7 +2,6 @@ package com.example.ExpenseTracker.Service.Expense;
 
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -44,9 +43,9 @@ class ExpenseServiceManagerTest {
 
         assertEquals(expense.getAmount(),result.getAmount());
         assertEquals(expense.getId(),result.getId());
-        assertEquals(expense.getCategory(),result.getCategory());
+        assertEquals(expense.getCategoryId(),result.getCategoryId());
         assertEquals(expense.getDate(),result.getDate());
-        assertEquals(expense.getUser(),result.getUser());
+        assertEquals(expense.getUserId(),result.getUserId());
         assertEquals(expense.getDescription(),result.getDescription());
 
         verify(repository,times(1))
@@ -129,8 +128,8 @@ class ExpenseServiceManagerTest {
         assertEquals(expenses.size(),result.size());
 
         for (int i = 0; i < expenses.size(); i++) {
-            assertEquals(expenses.get(i).getCategory(),
-                    result.get(i).getCategory());
+            assertEquals(expenses.get(i).getCategoryId(),
+                    result.get(i).getCategoryId());
         }
 
         verify(repository,times(1)
@@ -178,8 +177,8 @@ class ExpenseServiceManagerTest {
         List<Expense> result = serviceManager.getAllExpensesByUser(1L);
 
         for (int i = 0; i < expenses.size(); i++) {
-            assertEquals(expenses.get(i).getUser(),
-                    result.get(i).getUser());
+            assertEquals(expenses.get(i).getUserId(),
+                    result.get(i).getUserId());
         }
 
         verify(repository,times(1)).findAllByUserId(1L);
