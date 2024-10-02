@@ -1,18 +1,18 @@
 package com.example.ExpenseTracker.Responses.Security;
 
 public class AuthResponse {
-    private String jwt;
+    private String generatedJwt;
 
-    public AuthResponse(String jwt) {
-        this.jwt = jwt;
+    public AuthResponse(String generatedJwt) {
+        this.generatedJwt = generatedJwt;
     }
 
-    public String getJwt() {
-        return jwt;
+    public String getGeneratedJwt() {
+        return generatedJwt;
     }
 
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
+    public void setGeneratedJwt(String generatedJwt) {
+        this.generatedJwt = generatedJwt;
     }
 
 
