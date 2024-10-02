@@ -31,7 +31,7 @@ public class ExpenseController {
 
 
     @GetMapping("/{expenseId}/{userId}")
-    public Expense getExpense(
+    public Expense returnExpense(
             @PathVariable Long expenseId,
             @PathVariable Long userId){
         return expenseFilterManager.findExpenseById(expenseId,userId);
@@ -51,7 +51,7 @@ public class ExpenseController {
 
 
     @GetMapping("/filter/{categoryId}/{userId}")
-    public List<Expense> getExpenseByCategory(
+    public List<Expense> returnExpensesFound(
             @PathVariable Long categoryId,
             @PathVariable Long userId){
         return expenseFilterManager.findByFilter(categoryId,userId);
@@ -59,7 +59,7 @@ public class ExpenseController {
 
 
     @GetMapping("/all/{userId}")
-    public List<Expense> getAllExpensesByUser(@PathVariable Long userId){
+    public List<Expense> returnAllExpensesByAUser(@PathVariable Long userId){
         return expenseServiceManager.getAllExpensesByUser(userId);
     }
 

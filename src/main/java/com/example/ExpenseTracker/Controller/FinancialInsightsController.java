@@ -21,7 +21,7 @@ public class FinancialInsightsController {
     }
 
     @GetMapping("summary/{id}/{startDate}/{endDate}")
-    public ExpenseSummaryResponse getSummaryBetween(
+    public ExpenseSummaryResponse returnSummaryBetweenTwoDates(
             @PathVariable Long id,
             @PathVariable LocalDate startDate,
             @PathVariable LocalDate endDate){
@@ -32,13 +32,13 @@ public class FinancialInsightsController {
 
 
     @GetMapping("/category-breakdown/{userId}")
-    public CategoryBreakdownResponse getCategoryBreakdown(@PathVariable Long userId){
+    public CategoryBreakdownResponse returnCategoryBreakdown(@PathVariable Long userId){
         return expenseSummaryServiceManager.categoryBreakdown(userId);
     }
 
 
     @GetMapping("/trends/monthly/{userId}/{startDate}/{endDate}")
-    public MonthlySpendingResponse getMonthlySpending(
+    public MonthlySpendingResponse returnMonthlySpending(
             @PathVariable Long userId,
             @PathVariable LocalDate startDate,
             @PathVariable LocalDate endDate){
