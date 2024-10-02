@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,6 +37,9 @@ class UserControllerTest {
     @Autowired
     private TestUtility testUtility;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Container
     @ServiceConnection
     private static PostgreSQLContainer<?> postgres = new
@@ -50,7 +54,8 @@ class UserControllerTest {
 
         String jsonString = testUtility.convertToJSON(expected);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
+        mockMvc.perform(MockMvcRequestBuilders.post(url +
+                                "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString))
                 .andExpect(status().isCreated());
@@ -64,11 +69,13 @@ class UserControllerTest {
         User result = testUtility
                 .convertMVCResultToObject(mvcResult, User.class);
 
+
+
         assertThat(result.getEmail())
                 .isEqualTo(expected.getEmail());
-
-        assertThat(result.getPassword())
-                .isEqualTo(expected.getPassword());
+        assertThat(passwordEncoder.matches(
+                expected.getPassword(),result
+                        .getPassword())).isTrue();
 
         assertThat(result.getUsername())
                 .isEqualTo(expected.getUsername());

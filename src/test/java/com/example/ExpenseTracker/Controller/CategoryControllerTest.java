@@ -31,10 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-//@EnableAutoConfiguration(exclude = {
-//        SecurityAutoConfiguration.class,
-//        SecurityFilterAutoConfiguration.class
-//})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CategoryControllerTest {
