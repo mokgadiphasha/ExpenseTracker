@@ -34,7 +34,7 @@ class ExpenseSummaryServiceManagerImplTest {
     }
 
     @Test
-    void shouldGenerateSummaryBetweenTwoGivenDates() {
+    void shouldGenerateFindSummaryBetweenTwoGivenDatesTwoGivenDates() {
         LocalDate start = LocalDate.of(2024,8,1);
         LocalDate end = LocalDate.of(2024,8,31);
         Double amountToBeReturned = 500.0;
@@ -43,7 +43,7 @@ class ExpenseSummaryServiceManagerImplTest {
                 .thenReturn(amountToBeReturned);
 
         ExpenseSummaryResponse result = serviceManager
-                .summaryBetween(1L,start,end);
+                .findSummaryBetweenTwoGivenDates(1L,start,end);
 
         assertEquals(amountToBeReturned,result.getExpenseTotal());
 
@@ -54,12 +54,12 @@ class ExpenseSummaryServiceManagerImplTest {
 
 
     @Test
-    void shouldNotGenerateSummaryBetweenTwoGivenDates(){
+    void shouldNotGenerateFindSummaryBetweenTwoGivenDatesTwoGivenDates(){
         LocalDate end = LocalDate.of(2024,8,1);
         LocalDate start = LocalDate.of(2024,8,31);
 
         Exception exception = assertThrows(RuntimeException.class,
-                () -> serviceManager.summaryBetween(1L,start,end));
+                () -> serviceManager.findSummaryBetweenTwoGivenDates(1L,start,end));
 
         String message = "An error occurred: " +
                 "start date " + start.toString()+" is after end date "
@@ -68,7 +68,7 @@ class ExpenseSummaryServiceManagerImplTest {
     }
 
     @Test
-    void shouldReturnCategoryBreakdown() {
+    void shouldReturnFindCategoryBreakdown() {
         CategoryExpense categoryExpenseOne = new CategoryExpense();
         categoryExpenseOne.setCategoryId(1L);
         categoryExpenseOne.setTotalExpense(500.0);
@@ -85,7 +85,7 @@ class ExpenseSummaryServiceManagerImplTest {
                 .thenReturn(categoryExpenses);
 
         CategoryBreakdownResponse result = serviceManager
-                .categoryBreakdown(1L);
+                .findCategoryBreakdown(1L);
 
         assertEquals(categoryExpenses.size(),
                 result.getCategoryExpenses().size());
@@ -104,7 +104,7 @@ class ExpenseSummaryServiceManagerImplTest {
     }
 
     @Test
-    void shouldReturnMonthlySpending() {
+    void shouldReturnFindMonthlySpending() {
         LocalDate start = LocalDate.of(2024,1,1);
         LocalDate end = LocalDate.of(2024,8,31);
 
@@ -126,7 +126,7 @@ class ExpenseSummaryServiceManagerImplTest {
                 .thenReturn(months);
 
         MonthlySpendingResponse result = serviceManager
-                .monthlySpending(start,end,1L);
+                .findMonthlySpending(start,end,1L);
 
         assertEquals(months.size(),result.getMonths().size());
 
@@ -149,12 +149,12 @@ class ExpenseSummaryServiceManagerImplTest {
     }
 
     @Test
-    void shouldNotReturnMonthlySpending(){
+    void shouldNotReturnFindMonthlySpending(){
         LocalDate end = LocalDate.of(2024,1,1);
         LocalDate start = LocalDate.of(2024,8,31);
 
         Exception exception = assertThrows(RuntimeException.class,
-                () -> serviceManager.monthlySpending(start,end,1L));
+                () -> serviceManager.findMonthlySpending(start,end,1L));
 
         String message = "An error occurred: " +
                 "start date " + start.toString()+" is after end date "

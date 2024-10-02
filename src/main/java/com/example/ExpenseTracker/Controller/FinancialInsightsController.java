@@ -27,13 +27,13 @@ public class FinancialInsightsController {
             @PathVariable LocalDate endDate){
 
         return expenseSummaryServiceManager
-                .summaryBetween(id,startDate,endDate);
+                .findSummaryBetweenTwoGivenDates(id,startDate,endDate);
     }
 
 
     @GetMapping("/category-breakdown/{userId}")
     public CategoryBreakdownResponse returnCategoryBreakdown(@PathVariable Long userId){
-        return expenseSummaryServiceManager.categoryBreakdown(userId);
+        return expenseSummaryServiceManager.findCategoryBreakdown(userId);
     }
 
 
@@ -44,7 +44,7 @@ public class FinancialInsightsController {
             @PathVariable LocalDate endDate){
 
         return expenseSummaryServiceManager
-                .monthlySpending(startDate,endDate,userId);
+                .findMonthlySpending(startDate,endDate,userId);
 
     }
 

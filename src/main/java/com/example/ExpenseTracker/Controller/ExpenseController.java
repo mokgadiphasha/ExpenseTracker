@@ -3,7 +3,6 @@ package com.example.ExpenseTracker.Controller;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Service.Expense.BaseExpenseCRUDServiceManager;
 import com.example.ExpenseTracker.Service.Expense.ExpenseFilter;
-import com.example.ExpenseTracker.Service.Expense.ExpenseServiceManager;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -54,13 +53,13 @@ public class ExpenseController {
     public List<Expense> returnExpensesFound(
             @PathVariable Long categoryId,
             @PathVariable Long userId){
-        return expenseFilterManager.findByFilter(categoryId,userId);
+        return expenseFilterManager.findByCategoryFilter(categoryId,userId);
     }
 
 
     @GetMapping("/all/{userId}")
     public List<Expense> returnAllExpensesByAUser(@PathVariable Long userId){
-        return expenseServiceManager.getAllExpensesByUser(userId);
+        return expenseServiceManager.findAllExpensesByUser(userId);
     }
 
 }

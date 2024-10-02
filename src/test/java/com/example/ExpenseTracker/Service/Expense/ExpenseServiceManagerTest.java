@@ -113,7 +113,7 @@ class ExpenseServiceManagerTest {
     }
 
     @Test
-    void shouldFindByFilter() {
+    void shouldFindByCategoryFilter() {
         List<Expense> expenses = new ArrayList<>();
         expenses.add(new Expense(100.00,"grocery purchase for myself.",
                 1L,3L, LocalDate.now()));
@@ -123,7 +123,7 @@ class ExpenseServiceManagerTest {
         when(repository.findAllByCategoryIdAndUserId(3L,1L))
                 .thenReturn(expenses);
 
-        List<Expense> result = serviceManager.findByFilter(3L,1L);
+        List<Expense> result = serviceManager.findByCategoryFilter(3L,1L);
 
         assertEquals(expenses.size(),result.size());
 
@@ -165,7 +165,7 @@ class ExpenseServiceManagerTest {
     }
 
     @Test
-    void shouldGetAllExpensesByUser() {
+    void shouldFindAllExpensesByUser() {
         List<Expense> expenses = new ArrayList<>();
         expenses.add(new Expense(100.00,"grocery purchase for myself.",
                 1L,3L, LocalDate.now()));
@@ -174,7 +174,7 @@ class ExpenseServiceManagerTest {
 
         when(repository.findAllByUserId(1L)).thenReturn(expenses);
 
-        List<Expense> result = serviceManager.getAllExpensesByUser(1L);
+        List<Expense> result = serviceManager.findAllExpensesByUser(1L);
 
         for (int i = 0; i < expenses.size(); i++) {
             assertEquals(expenses.get(i).getUserId(),

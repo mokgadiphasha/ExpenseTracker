@@ -8,6 +8,6 @@ public interface BaseExpenseCRUDServiceManager {
     void saveExpense(Expense expense);
     void updateExpense(Long id, Expense expense);
     void deleteExpense(Long id);
-    List<Expense> getAllExpensesByUser(Long userId);
+    List<Expense> findAllExpensesByUser(Long userId);
 
 }

@@ -21,7 +21,7 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
 
 
     @Override
-    public ExpenseSummaryResponse summaryBetween(Long UserId, LocalDate start, LocalDate end) {
+    public ExpenseSummaryResponse findSummaryBetweenTwoGivenDates(Long UserId, LocalDate start, LocalDate end) {
         if(start.isBefore(end)){
             Double totalExpense = expenseRepository
                     .summaryBetweenTwoGivenDatesQuery(start,end,UserId);
@@ -36,14 +36,14 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
 
 
     @Override
-    public CategoryBreakdownResponse categoryBreakdown(Long userId) {
+    public CategoryBreakdownResponse findCategoryBreakdown(Long userId) {
         return new CategoryBreakdownResponse(
                 expenseRepository.categoryBreakdownQuery(userId));
     }
 
 
     @Override
-    public MonthlySpendingResponse monthlySpending(LocalDate start, LocalDate end, Long userId) {
+    public MonthlySpendingResponse findMonthlySpending(LocalDate start, LocalDate end, Long userId) {
         if(!start.isAfter(end)){
 
             List<Month> months = expenseRepository

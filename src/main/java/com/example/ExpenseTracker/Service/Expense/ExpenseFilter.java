@@ -5,6 +5,6 @@ import com.example.ExpenseTracker.Model.Expense;
 import java.util.List;
 
 public interface ExpenseFilter {
-    List<Expense> findByFilter(Long categoryId,Long userId);
+    List<Expense> findByCategoryFilter(Long categoryId, Long userId);
     Expense findExpenseById(Long expenseId,Long UserId);
 }

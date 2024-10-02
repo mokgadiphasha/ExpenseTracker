@@ -7,8 +7,8 @@ import com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary.M
 import java.time.LocalDate;
 
 public interface ExpenseSummaryServiceManager {
-    ExpenseSummaryResponse summaryBetween(Long userId, LocalDate start, LocalDate end);
-    CategoryBreakdownResponse categoryBreakdown(Long userId);
-    MonthlySpendingResponse monthlySpending(LocalDate start,LocalDate end,Long userId);
+    ExpenseSummaryResponse findSummaryBetweenTwoGivenDates(Long userId, LocalDate start, LocalDate end);
+    CategoryBreakdownResponse findCategoryBreakdown(Long userId);
+    MonthlySpendingResponse findMonthlySpending(LocalDate start, LocalDate end, Long userId);
 
 }
