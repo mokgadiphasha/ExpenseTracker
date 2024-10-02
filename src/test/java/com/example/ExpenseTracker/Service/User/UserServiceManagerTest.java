@@ -23,6 +23,8 @@ class UserServiceManagerTest {
 
     @Mock
     private  UserRepository repository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @InjectMocks
     private UserServiceManager serviceManager;
 
