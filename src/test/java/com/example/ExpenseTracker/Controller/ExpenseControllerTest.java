@@ -201,7 +201,7 @@ class ExpenseControllerTest {
 
         List<Expense> expenses = testUtility
                 .convertMVCResultToList(mvcResult, Expense.class);
-        Expense firstExpenseInList = expenses.get(1);
+        Expense firstExpenseInList = expenses.get(2);
 
 
         assertThat(expenses.size()).isEqualTo(4);

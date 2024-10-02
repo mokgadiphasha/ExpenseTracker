@@ -22,4 +22,3 @@ INSERT INTO "Expense" (user_id,category_id,amount,date,description) VALUES (3,1,
 
 
 
-

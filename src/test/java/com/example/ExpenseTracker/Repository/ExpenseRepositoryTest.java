@@ -123,12 +123,12 @@ class ExpenseRepositoryTest {
     void shouldFindExpenseByValidExpenseIdAndValidUserId() {
 
         Expense expected = underTest.findAll()
-                .stream().filter(expense -> expense.getUserId().equals(2L)
-                && expense.getId().equals(28L))
+                .stream().filter(expense -> expense.getUserId().equals(3L)
+                && expense.getId().equals(1L))
                 .findFirst().get();
 
         Optional<Expense> result = underTest
-                .findByIdAndUserId(28L,2L);
+                .findByIdAndUserId(1L,3L);
 
         assertThat(result.isPresent())
                 .isTrue();
