@@ -19,11 +19,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJdbcTest
 @Testcontainers
@@ -99,7 +96,7 @@ class CustomExpenseRepositoryTest {
                 .findSumOfAllExpenses(underTest,start,end,1L);
 
         Double result = underTest
-                .sumAmountByDateBetweenAndUserId(start,end,1L);
+                .summaryBetweenTwoGivenDatesQuery(start,end,1L);
 
         assertThat(result).isEqualTo(expected);
     }
@@ -113,7 +110,7 @@ class CustomExpenseRepositoryTest {
                 .findMonthlySumOfExpenses(underTest,start,end,1L);
 
         List<Month> result = underTest
-                .sumAmountByMonthBetweenAndUserId(start,end,1L);
+                .monthlySpendingSummaryQuery(start,end,1L);
 
         assertThat(result.size())
                 .isEqualTo(expected.size());

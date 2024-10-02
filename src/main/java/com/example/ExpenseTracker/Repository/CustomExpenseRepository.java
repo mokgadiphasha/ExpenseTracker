@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CustomExpenseRepository {
     List<CategoryExpense> categoryBreakdownQuery(Long userId);
-    Double sumAmountByDateBetweenAndUserId(LocalDate start, LocalDate end, Long userId);
-    List<Month> sumAmountByMonthBetweenAndUserId(LocalDate start, LocalDate end, Long userId);
+    Double summaryBetweenTwoGivenDatesQuery(LocalDate start, LocalDate end, Long userId);
+    List<Month> monthlySpendingSummaryQuery(LocalDate start, LocalDate end, Long userId);
 }

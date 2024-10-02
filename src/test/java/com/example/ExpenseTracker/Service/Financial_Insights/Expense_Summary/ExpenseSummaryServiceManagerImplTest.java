@@ -39,7 +39,7 @@ class ExpenseSummaryServiceManagerImplTest {
         LocalDate end = LocalDate.of(2024,8,31);
         Double amountToBeReturned = 500.0;
 
-        when(repository.sumAmountByDateBetweenAndUserId(start,end,1L))
+        when(repository.summaryBetweenTwoGivenDatesQuery(start,end,1L))
                 .thenReturn(amountToBeReturned);
 
         ExpenseSummaryResponse result = serviceManager
@@ -48,7 +48,7 @@ class ExpenseSummaryServiceManagerImplTest {
         assertEquals(amountToBeReturned,result.getExpenseTotal());
 
         verify(repository,times(1))
-                .sumAmountByDateBetweenAndUserId(start,end,1L);
+                .summaryBetweenTwoGivenDatesQuery(start,end,1L);
 
     }
 
@@ -122,7 +122,7 @@ class ExpenseSummaryServiceManagerImplTest {
         months.add(monthOne);
         months.add(monthTwo);
 
-        when(repository.sumAmountByMonthBetweenAndUserId(start,end,1L))
+        when(repository.monthlySpendingSummaryQuery(start,end,1L))
                 .thenReturn(months);
 
         MonthlySpendingResponse result = serviceManager
@@ -144,7 +144,7 @@ class ExpenseSummaryServiceManagerImplTest {
         }
 
         verify(repository,times(1))
-                .sumAmountByMonthBetweenAndUserId(start,end,1L);
+                .monthlySpendingSummaryQuery(start,end,1L);
 
     }
 

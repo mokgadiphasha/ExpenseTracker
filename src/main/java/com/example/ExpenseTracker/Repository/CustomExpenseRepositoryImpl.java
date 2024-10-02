@@ -50,7 +50,7 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
 
 
     @Override
-    public Double sumAmountByDateBetweenAndUserId(LocalDate start, LocalDate end, Long userId) {
+    public Double summaryBetweenTwoGivenDatesQuery(LocalDate start, LocalDate end, Long userId) {
 
         String sql = "SELECT SUM(amount) AS total_amount FROM \"Expense\" " +
                 "WHERE date BETWEEN ? AND ? " +
@@ -63,7 +63,7 @@ public class CustomExpenseRepositoryImpl implements  CustomExpenseRepository{
 
 
     @Override
-    public List<Month> sumAmountByMonthBetweenAndUserId(LocalDate start, LocalDate end, Long userId) {
+    public List<Month> monthlySpendingSummaryQuery(LocalDate start, LocalDate end, Long userId) {
 
         String sql = "SELECT EXTRACT(YEAR FROM date) AS year, " +
                 "EXTRACT(MONTH FROM date) AS month, " +

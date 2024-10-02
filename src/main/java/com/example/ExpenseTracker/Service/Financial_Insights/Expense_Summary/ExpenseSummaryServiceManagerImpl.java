@@ -24,7 +24,7 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
     public ExpenseSummaryResponse summaryBetween(Long UserId, LocalDate start, LocalDate end) {
         if(start.isBefore(end)){
             Double totalExpense = expenseRepository
-                    .sumAmountByDateBetweenAndUserId(start,end,UserId);
+                    .summaryBetweenTwoGivenDatesQuery(start,end,UserId);
             return new ExpenseSummaryResponse(totalExpense);
         }
         else{
@@ -47,7 +47,7 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
         if(!start.isAfter(end)){
 
             List<Month> months = expenseRepository
-                    .sumAmountByMonthBetweenAndUserId(start,end,userId);
+                    .monthlySpendingSummaryQuery(start,end,userId);
             return new MonthlySpendingResponse(months);
         } else{
             throw new GlobalExceptionHandler("An error occurred: " +
