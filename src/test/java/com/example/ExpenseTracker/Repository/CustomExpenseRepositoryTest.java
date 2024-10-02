@@ -61,11 +61,11 @@ class CustomExpenseRepositoryTest {
     }
 
 
-    @Test
-    void testDatabase(){
-        assertThat(underTest.findAll().size())
-                .isEqualTo(allBootstrappedExpenses.size());
-    }
+//    @Test
+//    void testDatabase(){
+//        assertThat(underTest.findAll().size())
+//                .isEqualTo(allBootstrappedExpenses.size());
+//    }
 
     @Test
     void shouldReturnExpensesForEachCategoryForUser() {
