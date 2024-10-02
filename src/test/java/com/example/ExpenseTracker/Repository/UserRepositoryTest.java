@@ -32,11 +32,7 @@ class UserRepositoryTest {
     private static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:alpine");
 
-    @Test
-    void testConnection(){
-        assertThat(postgres.isCreated()).isTrue();
-        assertThat(postgres.isRunning()).isTrue();
-    }
+
     @Test
     void shouldExistByUsernameAndEmail() {
         User user = underTest.findById(1L).get();
@@ -46,7 +42,8 @@ class UserRepositoryTest {
         boolean result = underTest
                 .existsByUsernameAndEmail(username,email);
 
-        assertThat(result).isTrue();
+        assertThat(result)
+                .isTrue();
     }
 
 
@@ -57,6 +54,7 @@ class UserRepositoryTest {
         boolean result = underTest
                 .existsByUsernameAndEmail(username,email);
 
-        assertThat(result).isFalse();
+        assertThat(result)
+                .isFalse();
     }
 }

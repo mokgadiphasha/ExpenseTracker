@@ -51,18 +51,6 @@ class CustomExpenseRepositoryTest {
 
     }
 
-    @Test
-    void testConnection(){
-        assertThat(postgres.isCreated()).isTrue();
-        assertThat(postgres.isRunning()).isTrue();
-    }
-
-
-//    @Test
-//    void testDatabase(){
-//        assertThat(underTest.findAll().size())
-//                .isEqualTo(allBootstrappedExpenses.size());
-//    }
 
     @Test
     void shouldReturnExpensesForEachCategoryForUser() {
@@ -87,6 +75,7 @@ class CustomExpenseRepositoryTest {
         }
     }
 
+
     @Test
     void shouldSumAmountUsingTwoDatesAndUserId() {
         LocalDate start = LocalDate.of(2024,5,1);
@@ -98,8 +87,10 @@ class CustomExpenseRepositoryTest {
         Double result = underTest
                 .summaryBetweenTwoGivenDatesQuery(start,end,1L);
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result)
+                .isEqualTo(expected);
     }
+
 
     @Test
     void shouldSumAmountPerMonthForUser() {

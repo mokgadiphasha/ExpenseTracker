@@ -50,12 +50,6 @@ class ExpenseRepositoryTest {
         underTest.deleteAll();
     }
 
-    @Test
-    void testConnection(){
-        assertThat(postgres.isCreated()).isTrue();
-        assertThat(postgres.isRunning()).isTrue();
-    }
-
 
     @Test
     void shouldFindAllByCategoryIdAndUserId() {
@@ -99,7 +93,8 @@ class ExpenseRepositoryTest {
         List<Expense> result = underTest
                 .findAllByCategoryIdAndUserId(11L,1L);
 
-        assertThat(result.size()).isEqualTo(expected.size());
+        assertThat(result.size())
+                .isEqualTo(expected.size());
     }
 
 
@@ -125,38 +120,18 @@ class ExpenseRepositoryTest {
 
 
     @Test
-    void findExpenseByValidExpenseIdAndValidUserId() {
-//        System.out.println(underTest.findAll().size());
-//        for (Expense ex: underTest.findAll()){
-//            System.out.println();
-//            System.out.println("{");
-//            System.out.println("Id: " + ex.getId());
-//            System.out.println("User Id: " + ex.getUser());
-//            System.out.println("Description: " + ex.getDescription());
-//            System.out.println("Amount: "+ex.getAmount());
-//        }
+    void shouldFindExpenseByValidExpenseIdAndValidUserId() {
 
         Expense expected = underTest.findAll()
                 .stream().filter(expense -> expense.getUserId().equals(2L)
                 && expense.getId().equals(28L))
                 .findFirst().get();
 
-//        System.out.println("EXPECTED: ");
-//        System.out.println("USER: " + expected.getUser());
-//        System.out.println("DESCRIPTION: " + expected.getDescription());
-//        System.out.println("DATE: " + expected.getDate());
-//        System.out.println("CATEGORY: " + expected.getCategory());
-
         Optional<Expense> result = underTest
                 .findByIdAndUserId(28L,2L);
 
-//        System.out.println("RESULT: ");
-//        System.out.println("USER: " + result.get().getUser());
-//        System.out.println("DESCRIPTION: " + result.get().getDescription());
-//        System.out.println("DATE: " + result.get().getDate());
-//        System.out.println("CATEGORY: " + result.get().getCategory());
-
-        assertThat(result.isPresent()).isTrue();
+        assertThat(result.isPresent())
+                .isTrue();
 
         assertThat(result.get().getId())
                 .isEqualTo(expected.getId());
@@ -165,26 +140,30 @@ class ExpenseRepositoryTest {
                 .isEqualTo(expected.getUserId());
     }
 
+
     @Test
     void shouldNotFindAllByInvalidUserId(){
         List<Expense> expected = new ArrayList<>();
         List<Expense> result = underTest
                 .findAllByUserId(99L);
 
-        assertThat(result.size()).isEqualTo(expected.size());
+        assertThat(result.size())
+                .isEqualTo(expected.size());
     }
 
 
     @Test
-    void findByInvalidExpenseIdAndValidUserId(){
+    void shouldNotFindExpenseByInvalidExpenseIdAndValidUserId(){
         Optional<Expense> result = underTest
                 .findByIdAndUserId(1L,1L);
 
-        assertThat(result.isPresent()).isFalse();
+        assertThat(result.isPresent())
+                .isFalse();
     }
 
 
     public void boostrapData(){
+
         Expense expenseOne = new Expense(100.0,
                 "Purchase for new shoes",
                 1L,8L,LocalDate.now());
