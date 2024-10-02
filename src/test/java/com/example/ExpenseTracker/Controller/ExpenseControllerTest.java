@@ -131,7 +131,7 @@ class ExpenseControllerTest {
     }
 
     @Test
-    void shouldGetExpenseByCategory() throws Exception {
+    void shouldFindAllExpenseByACategory() throws Exception {
         String categoryId = "1";
         String userId = "3";
         Expense expected = new Expense(600.00,
@@ -187,7 +187,7 @@ class ExpenseControllerTest {
 
 
     @Test
-    void shouldGetAllExpensesByUser() throws Exception {
+    void shouldFindAllExpensesByUser() throws Exception {
         String userId = "3";
         Expense expected = new Expense(600.00,
                 "Went to buy dress for the dinner tomorrow",
@@ -222,6 +222,7 @@ class ExpenseControllerTest {
         assertThat(firstExpenseInList.getCategoryId())
                 .isEqualTo(expected.getCategoryId());
     }
+
 
     @Test
     void shouldUpdateExpense() throws Exception {
@@ -271,8 +272,9 @@ class ExpenseControllerTest {
 
     }
 
+
     @Test
-    void deleteExpense() throws Exception {
+    void shouldDeleteExpense() throws Exception {
         String expenseId = "1";
         String userId = "3";
 

@@ -74,6 +74,7 @@ class FinancialInsightsControllerTest {
                 .isEqualTo(expected);
     }
 
+
     @Test
     void shouldNotFindExpenseSummaryBetweenTwoDates() throws Exception {
         String userId = "3";
@@ -84,6 +85,7 @@ class FinancialInsightsControllerTest {
                     "/summary/" + userId + "/" + start + "/" + end))
                 .andExpect(status().isBadRequest());
     }
+
 
     @Test
     void shouldFindExpenseTotalsPerCategory() throws Exception {
@@ -117,6 +119,7 @@ class FinancialInsightsControllerTest {
                 .isEqualTo(categoryExpenses.size());
     }
 
+
     @Test
     void shouldFindMonthlyExpenseTotal() throws Exception {
         String userId = "3";
@@ -140,6 +143,7 @@ class FinancialInsightsControllerTest {
         assertThat(result.getMonths().size())
                 .isEqualTo(monthlyExpense.size());
     }
+
 
     @Test
     void shouldNotFindMonthlyExpenseTotal() throws Exception {

@@ -46,7 +46,7 @@ class CategoryControllerTest {
             new PostgreSQLContainer<>("postgres:alpine");
 
     @Test
-    void getCategories() throws Exception {
+    void shouldFindAllCategories() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/category"))
                 .andExpect(status().isOk())

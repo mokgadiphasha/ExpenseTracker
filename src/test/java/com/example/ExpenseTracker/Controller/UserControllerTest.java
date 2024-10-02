@@ -81,6 +81,7 @@ class UserControllerTest {
                 .isEqualTo(expected.getUsername());
     }
 
+
     @Test
     void shouldFindUser() throws Exception {
         String userId = "3";
@@ -119,6 +120,7 @@ class UserControllerTest {
                 .andReturn();
     }
 
+
     @Test
     void shouldUpdateUser() throws Exception {
         String userId = "3";
@@ -147,6 +149,7 @@ class UserControllerTest {
         assertThat(result.getUsername())
                 .isEqualTo(expected.getUsername());
     }
+
 
     @Test
     void shouldNotUpdateNonExistentUser() throws Exception {
