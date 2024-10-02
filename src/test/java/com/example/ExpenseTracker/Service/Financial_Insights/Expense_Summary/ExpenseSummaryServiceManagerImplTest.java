@@ -33,6 +33,7 @@ class ExpenseSummaryServiceManagerImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
+
     @Test
     void shouldGenerateFindSummaryBetweenTwoGivenDatesTwoGivenDates() {
         LocalDate start = LocalDate.of(2024,8,1);
@@ -67,8 +68,9 @@ class ExpenseSummaryServiceManagerImplTest {
         assertEquals(message,exception.getMessage());
     }
 
+
     @Test
-    void shouldReturnFindCategoryBreakdown() {
+    void shouldReturnCategoryBreakdown() {
         CategoryExpense categoryExpenseOne = new CategoryExpense();
         categoryExpenseOne.setCategoryId(1L);
         categoryExpenseOne.setTotalExpense(500.0);
@@ -102,6 +104,7 @@ class ExpenseSummaryServiceManagerImplTest {
         verify(repository,times(1))
                 .categoryBreakdownQuery(1L);
     }
+
 
     @Test
     void shouldReturnFindMonthlySpending() {
@@ -148,6 +151,7 @@ class ExpenseSummaryServiceManagerImplTest {
 
     }
 
+
     @Test
     void shouldNotReturnFindMonthlySpending(){
         LocalDate end = LocalDate.of(2024,1,1);
@@ -161,7 +165,6 @@ class ExpenseSummaryServiceManagerImplTest {
                 +end.toString()+".";
 
         assertEquals(message,exception.getMessage());
-
 
     }
 }

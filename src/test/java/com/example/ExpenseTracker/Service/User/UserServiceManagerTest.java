@@ -67,7 +67,6 @@ class UserServiceManagerTest {
 
         verify(repository,times(1)).findById(2L);
 
-
     }
 
 

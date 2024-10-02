@@ -54,7 +54,7 @@ class ExpenseServiceManagerTest {
 
 
     @Test
-    void shouldNotFindUserById(){
+    void shouldNotFindExpenseById(){
         when(repository.findByIdAndUserId(1L,1L))
                 .thenReturn(Optional.empty());
 
@@ -69,6 +69,7 @@ class ExpenseServiceManagerTest {
                 .findByIdAndUserId(1L,1L);
     }
 
+
     @Test
     void shouldSaveExpense() {
         Expense expense = new Expense(100.00,"rent money.",
@@ -76,7 +77,8 @@ class ExpenseServiceManagerTest {
 
         serviceManager.saveExpense(expense);
 
-        verify(repository,times(1)).save(expense);
+        verify(repository,
+                times(1)).save(expense);
     }
 
 
@@ -89,8 +91,10 @@ class ExpenseServiceManagerTest {
 
         serviceManager.updateExpense(1L,expense);
 
-        verify(repository,times(1)).findById(1L);
-        verify(repository,times(1)).save(expense);
+        verify(repository,
+                times(1)).findById(1L);
+        verify(repository,
+                times(1)).save(expense);
     }
 
 
@@ -108,9 +112,11 @@ class ExpenseServiceManagerTest {
                 + 1 +" could not be updated.";
 
         assertEquals(message,exception.getMessage());
-        verify(repository,times(1)).findById(1L);
+        verify(repository,
+                times(1)).findById(1L);
 
     }
+
 
     @Test
     void shouldFindByCategoryFilter() {
@@ -123,7 +129,8 @@ class ExpenseServiceManagerTest {
         when(repository.findAllByCategoryIdAndUserId(3L,1L))
                 .thenReturn(expenses);
 
-        List<Expense> result = serviceManager.findByCategoryFilter(3L,1L);
+        List<Expense> result = serviceManager
+                .findByCategoryFilter(3L,1L);
 
         assertEquals(expenses.size(),result.size());
 
@@ -137,14 +144,17 @@ class ExpenseServiceManagerTest {
 
     }
 
+
     @Test
     void shouldDeleteExpense() {
         when(repository.existsById(1L)).thenReturn(true);
 
         serviceManager.deleteExpense(1L);
 
-        verify(repository,times(1)).existsById(1L);
-        verify(repository,times(1)).deleteById(1L);
+        verify(repository,
+                times(1)).existsById(1L);
+        verify(repository,
+                times(1)).deleteById(1L);
 
     }
 
@@ -161,8 +171,10 @@ class ExpenseServiceManagerTest {
 
         assertEquals(message,exception.getMessage());
 
-        verify(repository,times(1)).existsById(1L);
+        verify(repository,
+                times(1)).existsById(1L);
     }
+
 
     @Test
     void shouldFindAllExpensesByUser() {
@@ -181,7 +193,8 @@ class ExpenseServiceManagerTest {
                     result.get(i).getUserId());
         }
 
-        verify(repository,times(1)).findAllByUserId(1L);
+        verify(repository,
+                times(1)).findAllByUserId(1L);
 
 
     }
