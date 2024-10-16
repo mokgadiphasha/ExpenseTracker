@@ -59,13 +59,14 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
     @Override
     public void deleteExpense(Long id) {
-        boolean isExpensePresent = expenseRepository.existsById(1L);
+        boolean isExpensePresent = expenseRepository.existsById(id);
 
         if(isExpensePresent){
             expenseRepository.deleteById(id);
         } else {
             throw new GlobalExceptionHandler("An error occurred: Expense with id: "
                     + id +" could not be deleted.");
+
         }
     }
 

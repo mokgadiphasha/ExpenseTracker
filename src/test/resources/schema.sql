@@ -23,14 +23,7 @@ CREATE TABLE IF NOT EXISTS "Expense" (
     FOREIGN KEY (category_id) REFERENCES "Category"(id) ON DELETE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS "Budget" (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    category_id BIGINT NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES "Category"(id) ON DELETE RESTRICT
-);
+
 
 
 

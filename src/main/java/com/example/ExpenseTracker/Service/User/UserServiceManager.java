@@ -40,15 +40,6 @@ public class UserServiceManager implements BaseUserCRUDServiceManager,Authentica
     @Override
     public User findUserById(Long id) {
 
-//        for (User user: userRepository.findAll()) {
-//            System.out.println("{");
-//            System.out.println(user.getId());
-//            System.out.println(user.getUsername());
-//            System.out.println(user.getPassword());
-//            System.out.println("}");
-//
-//        }
-
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(()->
                 new GlobalExceptionHandler("User with id: "
