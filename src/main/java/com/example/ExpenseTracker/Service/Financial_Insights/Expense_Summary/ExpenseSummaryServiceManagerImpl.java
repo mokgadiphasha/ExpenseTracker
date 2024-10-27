@@ -6,6 +6,7 @@ import com.example.ExpenseTracker.Repository.ExpenseRepository;
 import com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary.CategoryBreakdownResponse;
 import com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary.ExpenseSummaryResponse;
 import com.example.ExpenseTracker.Responses.Financial_Insights.Expense_Summary.MonthlySpendingResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,9 +29,9 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
             return new ExpenseSummaryResponse(totalExpense);
         }
         else{
-            throw new GlobalExceptionHandler("An error occurred: " +
-                    "start date " + start.toString()+" is after end date "
-                    +end.toString()+".");
+            throw new GlobalExceptionHandler("StartDate parameter" +
+                    " should be earlier than EndDate.", HttpStatus.BAD_REQUEST,
+                    "BAD_REQUEST");
         }
     }
 
@@ -50,9 +51,9 @@ public class ExpenseSummaryServiceManagerImpl implements ExpenseSummaryServiceMa
                     .monthlySpendingSummaryQuery(start,end,userId);
             return new MonthlySpendingResponse(months);
         } else{
-            throw new GlobalExceptionHandler("An error occurred: " +
-                    "start date " + start.toString()+" is after end date "
-                    +end.toString()+".");
+            throw new GlobalExceptionHandler("StartDate parameter" +
+                    " should be earlier than EndDate.", HttpStatus.BAD_REQUEST,
+                    "BAD_REQUEST");
         }
     }
 

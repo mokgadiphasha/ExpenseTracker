@@ -61,8 +61,8 @@ class ExpenseServiceManagerTest {
         Exception exception = assertThrows(RuntimeException.class,
                 () -> serviceManager.findExpenseById(1L,1L));
 
-        String message = "An error occurred: Expense with id: " + 1
-                + " or user with id: " + 1;
+        String message ="Expense could " +
+                "not be found.";
         assertEquals(message,exception.getMessage());
 
         verify(repository,times(1))
@@ -108,8 +108,7 @@ class ExpenseServiceManagerTest {
         Exception exception = assertThrows(RuntimeException.class,
                 () -> serviceManager.updateExpense(1L,expense));
 
-        String message = "An error occurred: Expense with id: "
-                + 1 +" could not be updated.";
+        String message = "Expense could not be updated.";
 
         assertEquals(message,exception.getMessage());
         verify(repository,
@@ -166,8 +165,7 @@ class ExpenseServiceManagerTest {
         Exception exception = assertThrows(RuntimeException.class,
                 () -> serviceManager.deleteExpense(1L));
 
-        String message = "An error occurred: Expense with id: "
-                + 1 +" could not be deleted.";
+        String message = "Expense could not be deleted.";
 
         assertEquals(message,exception.getMessage());
 

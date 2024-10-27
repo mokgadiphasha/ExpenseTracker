@@ -3,6 +3,7 @@ package com.example.ExpenseTracker.Service.Expense;
 import com.example.ExpenseTracker.Exceptions.GlobalExceptionHandler;
 import com.example.ExpenseTracker.Model.Expense;
 import com.example.ExpenseTracker.Repository.ExpenseRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +20,12 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
 
     @Override
     public Expense findExpenseById(Long id,Long userId) {
-        Optional<Expense> expense = expenseRepository.findByIdAndUserId(id,userId);
+        Optional<Expense> expense = expenseRepository
+                .findByIdAndUserId(id,userId);
         return expense.orElseThrow(() -> new GlobalExceptionHandler(
-                "An error occurred: Expense with id: " + id.toString()
-                + " or user with id: " +userId.toString()));
+                "Expense could " +
+                        "not be found.", HttpStatus.NOT_FOUND,
+                "NOT_FOUND"));
     }
 
 
@@ -43,8 +46,9 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
             expenseRepository.save(updatedExpense);
 
         } else{
-            throw new GlobalExceptionHandler("An error occurred: Expense with id: "
-            + id +" could not be updated.");
+            throw new GlobalExceptionHandler("Expense could not be updated."
+                    , HttpStatus.NOT_FOUND,
+                    "NOT_FOUND");
 
         }
     }
@@ -64,8 +68,9 @@ public class ExpenseServiceManager implements BaseExpenseCRUDServiceManager , Ex
         if(isExpensePresent){
             expenseRepository.deleteById(id);
         } else {
-            throw new GlobalExceptionHandler("An error occurred: Expense with id: "
-                    + id +" could not be deleted.");
+            throw new GlobalExceptionHandler("Expense could not be deleted.",
+                    HttpStatus.NOT_FOUND,
+                    "NOT_FOUND");
 
         }
     }

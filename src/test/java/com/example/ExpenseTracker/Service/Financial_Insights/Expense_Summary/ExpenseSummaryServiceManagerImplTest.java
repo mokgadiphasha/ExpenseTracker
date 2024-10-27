@@ -62,9 +62,8 @@ class ExpenseSummaryServiceManagerImplTest {
         Exception exception = assertThrows(RuntimeException.class,
                 () -> serviceManager.findSummaryBetweenTwoGivenDates(1L,start,end));
 
-        String message = "An error occurred: " +
-                "start date " + start.toString()+" is after end date "
-                +end.toString()+".";
+        String message = "StartDate parameter" +
+                " should be earlier than EndDate.";
         assertEquals(message,exception.getMessage());
     }
 
@@ -160,9 +159,8 @@ class ExpenseSummaryServiceManagerImplTest {
         Exception exception = assertThrows(RuntimeException.class,
                 () -> serviceManager.findMonthlySpending(start,end,1L));
 
-        String message = "An error occurred: " +
-                "start date " + start.toString()+" is after end date "
-                +end.toString()+".";
+        String message = "StartDate parameter" +
+                " should be earlier than EndDate.";
 
         assertEquals(message,exception.getMessage());
 

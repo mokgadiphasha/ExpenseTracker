@@ -61,8 +61,8 @@ class UserServiceManagerTest {
        Exception exception = assertThrows(Exception.class,
                ()-> serviceManager.findUserById(2L));
 
-       String message = "User with id: "
-                + 2 + " does not exist.";
+       String message ="User " +
+               "not found.";
        assertEquals(message,exception.getMessage());
 
         verify(repository,times(1)).findById(2L);
@@ -135,9 +135,8 @@ class UserServiceManagerTest {
         Exception exception = assertThrows(Exception.class,
                 () -> serviceManager.updateUser(1L,user));
 
-        String message = "An error occurred: " +
-                "User with id: " + 1
-                + " could not be updated.";
+        String message = "User " +
+                "information could not be updated.";
         assertEquals(message,exception.getMessage());
 
         verify(repository,times(1)).

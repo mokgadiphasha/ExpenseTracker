@@ -116,7 +116,7 @@ class UserControllerTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.get(url +
                                 "/" + userId))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andReturn();
     }
 
@@ -163,7 +163,7 @@ class UserControllerTest {
                         .put(url + "/" + userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andReturn();
     }
 }

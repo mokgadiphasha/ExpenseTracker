@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandlerService {
     @ExceptionHandler(GlobalExceptionHandler.class)
-    public ResponseEntity<String> handleGlobalCustomException(GlobalExceptionHandler ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleGlobalCustomException(GlobalExceptionHandler ex) {
+
+        ErrorResponse errorResponse =
+                new ErrorResponse(ex.getError(),ex.getMessage());
+
+        return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
 }

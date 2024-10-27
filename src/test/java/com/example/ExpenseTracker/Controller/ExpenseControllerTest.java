@@ -126,7 +126,7 @@ class ExpenseControllerTest {
 
         mockMvc.perform(get(url + "/" + expenseId
                 + "/" + userId))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
 
     }
 
@@ -268,7 +268,7 @@ class ExpenseControllerTest {
         mockMvc.perform(put(url + "/" + expenseId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
 
     }
 
@@ -284,7 +284,7 @@ class ExpenseControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .get(url + "/" + expenseId+ "/"
                     + userId))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
 }

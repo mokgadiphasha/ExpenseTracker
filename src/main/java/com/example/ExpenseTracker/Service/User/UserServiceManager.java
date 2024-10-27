@@ -7,6 +7,7 @@ import com.example.ExpenseTracker.Repository.UserRepository;
 import com.example.ExpenseTracker.Responses.Security.AuthResponse;
 import com.example.ExpenseTracker.Security.UserDetailsManagerService;
 import com.example.ExpenseTracker.Utility.JwtUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,8 +43,9 @@ public class UserServiceManager implements BaseUserCRUDServiceManager,Authentica
 
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(()->
-                new GlobalExceptionHandler("User with id: "
-                        + id+ " does not exist."));
+                new GlobalExceptionHandler("User " +
+                        "not found.", HttpStatus.NOT_FOUND,
+                        "NOT_FOUND"));
     }
 
 
@@ -55,7 +57,9 @@ public class UserServiceManager implements BaseUserCRUDServiceManager,Authentica
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         } else {
-            throw new GlobalExceptionHandler("User already registered.");
+            throw new GlobalExceptionHandler( "User already" +
+                    " registered.", HttpStatus.CONFLICT,
+                    "USER_ALREADY_EXISTS");
         }
 
     }
@@ -72,31 +76,35 @@ public class UserServiceManager implements BaseUserCRUDServiceManager,Authentica
             userRepository.save(user);
 
         } else{
-            throw new GlobalExceptionHandler("An error occurred: " +
-                    "User with id: " + id.toString()
-            + " could not be updated.");
+            throw new GlobalExceptionHandler( "User " +
+                    "information could not be updated.", HttpStatus.NOT_FOUND,
+                    "NOT_FOUND");
         }
     }
 
 
     @Override
     public AuthResponse createAuthentication(AuthRequest authRequest) {
-
+        User user;
         try {
+            user = userRepository.findByUsername
+                    (authRequest.getUsername()).get();
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest
                             .getUsername(), authRequest.getPassword())
             );
         } catch(Exception e){
-            throw new GlobalExceptionHandler("An error occurred Username: "
-                    + authRequest.getUsername() + " or password: " +
-                    authRequest.getPassword() + " incorrect.");
+            throw new GlobalExceptionHandler(
+                    "Incorrect password or username.",
+                    HttpStatus.UNAUTHORIZED,
+                    "UNAUTHORIZED");
         }
 
         final UserDetails userDetails = userDetailsManagerService
                 .loadUserByUsername(authRequest.getUsername());
+
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
-        return new AuthResponse(jwt);
+        return new AuthResponse(jwt,user.getId());
     }
 }
