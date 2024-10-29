@@ -55,7 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 jwt = authorizationHeader.substring(7);
                 username = jwtUtil.extractUsername(jwt);
             } else {
-                throw new GlobalExceptionHandler("Jwt token not found.",
+                throw new GlobalExceptionHandler("Authorization token is missing.",
                         HttpStatus.UNAUTHORIZED,"UNAUTHORIZED");
             }
 
@@ -75,7 +75,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext()
                             .setAuthentication(authenticationToken);
                 } else {
-                    throw new GlobalExceptionHandler("Jwt token invalid or expired.",
+                    throw new GlobalExceptionHandler("Your session has expired or is invalid. Please try to log in again.",
                             HttpStatus.UNAUTHORIZED,"UNAUTHORIZED");
                 }
             }
