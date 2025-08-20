@@ -28,6 +28,8 @@ The API is hosted on AWS and can be accessed directly via the server or run loca
 3. Run: mvn clean package -Dmaven.test.skip=true
 4. Run: docker-compose up --build
 
+## **PLEASE NOTE** 
+The project is no longer hosted on AWS due to the free tier expiration and can only be run locally at the moment. Feel free to peruse the Notion Documentation.
 Alternatively, you can access the deployed API on AWS, refer to [Notion documentation](https://obtainable-clavicle-371.notion.site/API-Documentation-129664ac6a40809ebe96e6e32aeacb10?pvs=4.).
 
 ## **Usage**
