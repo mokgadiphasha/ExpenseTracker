@@ -30,7 +30,7 @@ The API is hosted on AWS and can be accessed directly via the server or run loca
 
 ## **PLEASE NOTE** 
 The project is no longer hosted on AWS due to the free tier expiration and can only be run locally at the moment. Feel free to peruse the Notion Documentation.
-Alternatively, you can access the deployed API on AWS, refer to [Notion documentation](https://obtainable-clavicle-371.notion.site/API-Documentation-129664ac6a40809ebe96e6e32aeacb10?pvs=4.).
+You can access the documentation of the deployed API on AWS, although the API is inaccessible on AWS, refer to [Notion documentation](https://obtainable-clavicle-371.notion.site/API-Documentation-129664ac6a40809ebe96e6e32aeacb10?pvs=4.).
 
 ## **Usage**
 Once running, the API will be accessible at http://localhost:8080 (or via the AWS server). Use a tool like Postman to interact with the endpoints or integrate it into a frontend application.
